@@ -1,25 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}Authorized Access | CyberShield AI{% endblock %}
+{% block title %}Authorized Access | CyberShield{% endblock %}
 
 {% block content %}
 <div class="container-fluid p-0">
     <div class="row g-0 min-vh-100">
         <!-- Left Column: Brand Graphic Panel -->
-        <div class="col-lg-6 d-none d-lg-flex flex-column align-items-center justify-content-center bg-cs-secondary position-relative border-end border-cs px-5 overflow-hidden">
+        <div
+            class="col-lg-6 d-none d-lg-flex flex-column align-items-center justify-content-center bg-cs-secondary position-relative border-end border-cs px-5 overflow-hidden">
             <div class="hero-glow hero-glow-1" style="opacity: 0.15; top: 10%; right: 10%;"></div>
             <div class="hero-glow hero-glow-2" style="opacity: 0.1; bottom: 10%; left: 10%;"></div>
-            
+
             <div class="text-center position-relative animate__animated animate__fadeInLeft">
                 <div class="display-3 text-primary-cs mb-4"><i class="bi bi-shield-fill-check"></i></div>
-                <h2 class="fw-bold mb-3" style="font-family: var(--font-heading);">CyberShield AI Console</h2>
+                <h2 class="fw-bold mb-3" style="font-family: var(--font-heading);">CyberShield Console</h2>
                 <p class="text-secondary-cs mb-4 max-width-md mx-auto">
-                    Sign in to access your detailed URL audit ledger, manage threat parameters, and download certified security champion reports.
+                    Sign in to access your detailed URL audit ledger, manage threat parameters, and download certified
+                    security champion reports.
                 </p>
-                <div class="d-inline-flex flex-column align-items-start gap-2 bg-cs-primary p-3 rounded-3 border-cs text-start">
-                    <span class="small font-monospace text-success"><i class="bi bi-check-circle-fill"></i> Random Forest ML Active</span>
-                    <span class="small font-monospace text-info"><i class="bi bi-check-circle-fill"></i> SSL/HTTPS Scanning Integrated</span>
-                    <span class="small font-monospace text-warning"><i class="bi bi-check-circle-fill"></i> Heuristics Filter Matrix V2.0</span>
+                <div
+                    class="d-inline-flex flex-column align-items-start gap-2 bg-cs-primary p-3 rounded-3 border-cs text-start">
+                    <span class="small font-monospace text-success"><i class="bi bi-check-circle-fill"></i> Random
+                        Forest ML Active</span>
+                    <span class="small font-monospace text-info"><i class="bi bi-check-circle-fill"></i> SSL/HTTPS
+                        Scanning Integrated</span>
+                    <span class="small font-monospace text-warning"><i class="bi bi-check-circle-fill"></i> Heuristics
+                        Filter Matrix V2.0</span>
                 </div>
             </div>
         </div>
@@ -31,36 +37,40 @@
                     <h3 class="fw-bold" style="font-family: var(--font-heading);">Access Console</h3>
                     <p class="text-secondary-cs small">Supply cryptographic credentials to authorize session access.</p>
                 </div>
-                
+
                 <form action="{{ url_for('login') }}" method="POST" class="needs-validation" novalidate>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    
+
                     <!-- Username/Email -->
                     <div class="mb-3">
-                        <label for="username" class="form-label font-monospace small text-secondary-cs">Username or Email</label>
+                        <label for="username" class="form-label font-monospace small text-secondary-cs">Username or
+                            Email</label>
                         <div class="input-group-cs">
                             <span class="input-addon"><i class="bi bi-person"></i></span>
-                            <input type="text" name="username" id="username" class="form-control-cs" placeholder="username or email" required>
+                            <input type="text" name="username" id="username" class="form-control-cs"
+                                placeholder="username or email" required>
                         </div>
                     </div>
-                    
+
                     <!-- Password -->
                     <div class="mb-4">
                         <label for="password" class="form-label font-monospace small text-secondary-cs">Password</label>
                         <div class="input-group-cs">
                             <span class="input-addon"><i class="bi bi-lock"></i></span>
-                            <input type="password" name="password" id="password" class="form-control-cs" placeholder="password" required>
-                            <button type="button" class="btn bg-transparent border-0 text-secondary-cs" onclick="togglePasswordVisibility('password')" style="padding: 0 1rem;">
+                            <input type="password" name="password" id="password" class="form-control-cs"
+                                placeholder="password" required>
+                            <button type="button" class="btn bg-transparent border-0 text-secondary-cs"
+                                onclick="togglePasswordVisibility('password')" style="padding: 0 1rem;">
                                 <i class="bi bi-eye" id="toggle-icon-password"></i>
                             </button>
                         </div>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary-cs w-100 justify-content-center py-3 mb-3">
                         Authorize Access <i class="bi bi-box-arrow-in-right"></i>
                     </button>
                 </form>
-                
+
                 <div class="text-center text-lg-start mt-3">
                     <span class="text-secondary-cs small">Don't have an access key? </span>
                     <a href="{{ url_for('register') }}" class="small fw-bold text-primary-cs">Register Account</a>
@@ -71,18 +81,18 @@
 </div>
 
 <script>
-function togglePasswordVisibility(fieldId) {
-    const field = document.getElementById(fieldId);
-    const icon = document.getElementById('toggle-icon-' + fieldId);
-    if (field && icon) {
-        if (field.type === "password") {
-            field.type = "text";
-            icon.className = "bi bi-eye-slash";
-        } else {
-            field.type = "password";
-            icon.className = "bi bi-eye";
+    function togglePasswordVisibility(fieldId) {
+        const field = document.getElementById(fieldId);
+        const icon = document.getElementById('toggle-icon-' + fieldId);
+        if (field && icon) {
+            if (field.type === "password") {
+                field.type = "text";
+                icon.className = "bi bi-eye-slash";
+            } else {
+                field.type = "password";
+                icon.className = "bi bi-eye";
+            }
         }
     }
-}
 </script>
 {% endblock %}

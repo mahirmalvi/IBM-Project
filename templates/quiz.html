@@ -13,28 +13,31 @@
                 </div>
                 <h2 class="fw-bold mb-3" style="font-family: var(--font-heading);">Phishing Awareness Assessment</h2>
                 <p class="text-secondary-cs mb-4">
-                    Test your ability to spot deceptive URLs, phishing templates, and malicious indicators. Score at least <strong>8 out of 10</strong> to qualify for the <strong>CyberShield AI Security Champion Certificate</strong>.
                 </p>
                 <div class="alert alert-info border-0 text-start small mb-4 py-3">
-                    <h6 class="fw-bold"><i class="bi bi-info-circle-fill text-primary-cs"></i> Assessment Guidelines:</h6>
+                    <h6 class="fw-bold"><i class="bi bi-info-circle-fill text-primary-cs"></i> Assessment Guidelines:
+                    </h6>
                     <ul class="mb-0 ps-3 text-secondary-cs">
                         <li>Contains 10 Multiple Choice Questions (MCQs).</li>
                         <li>No time limit. Read explanations carefully after each answer.</li>
                         <li>Certificates are stored on your dashboard and are dynamically printable.</li>
                     </ul>
                 </div>
-                
+
                 {% if session.get('user_id') %}
-                    <button id="start-quiz-btn" class="btn-primary-cs btn-lg rounded-pill px-5 py-3 w-100 justify-content-center shadow">
-                        Begin Assessment <i class="bi bi-play-circle-fill ms-2"></i>
-                    </button>
+                <button id="start-quiz-btn"
+                    class="btn-primary-cs btn-lg rounded-pill px-5 py-3 w-100 justify-content-center shadow">
+                    Begin Assessment <i class="bi bi-play-circle-fill ms-2"></i>
+                </button>
                 {% else %}
-                    <div class="alert alert-warning border-0 mb-3 small">
-                        <i class="bi bi-exclamation-triangle"></i> You must be logged in to record your scores and qualify for a Certificate.
-                    </div>
-                    <a href="{{ url_for('login') }}?next=quiz" class="btn-primary-cs btn-lg rounded-pill px-5 py-3 w-100 justify-content-center shadow">
-                        Log In to Access <i class="bi bi-box-arrow-in-right ms-2"></i>
-                    </a>
+                <div class="alert alert-warning border-0 mb-3 small">
+                    <i class="bi bi-exclamation-triangle"></i> You must be logged in to record your scores and qualify
+                    for a Certificate.
+                </div>
+                <a href="{{ url_for('login') }}?next=quiz"
+                    class="btn-primary-cs btn-lg rounded-pill px-5 py-3 w-100 justify-content-center shadow">
+                    Log In to Access <i class="bi bi-box-arrow-in-right ms-2"></i>
+                </a>
                 {% endif %}
             </div>
 
@@ -45,22 +48,24 @@
                     <span id="quiz-progress-text" class="font-monospace small text-muted-cs">Question 1 of 10</span>
                     <span class="badge-cs badge-primary font-monospace">CyberShield AI</span>
                 </div>
-                
+
                 <!-- Progress bar -->
                 <div class="progress mb-4" style="height: 6px;">
-                    <div id="quiz-progress-bar" class="progress-bar" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div id="quiz-progress-bar" class="progress-bar" role="progressbar" style="width: 10%;"
+                        aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                
+
                 <!-- Question -->
                 <h4 id="quiz-question-text" class="fw-bold mb-4">Question text goes here?</h4>
-                
+
                 <!-- Options list -->
                 <div id="quiz-options-container" class="mb-4">
                     <!-- Option buttons generated dynamically by JS -->
                 </div>
-                
+
                 <!-- Explanation Card (Hidden by default) -->
-                <div id="quiz-explanation-card" class="p-3 bg-cs-tertiary rounded-3 border-cs mb-4 d-none animate__animated animate__fadeIn">
+                <div id="quiz-explanation-card"
+                    class="p-3 bg-cs-tertiary rounded-3 border-cs mb-4 d-none animate__animated animate__fadeIn">
                     <p id="quiz-explanation-text" class="text-secondary-cs small mb-0"></p>
                 </div>
 
@@ -83,15 +88,18 @@
                 <h2 class="fw-bold mb-2">Quiz Completed!</h2>
                 <p class="text-secondary-cs mb-4">Your final score is:</p>
                 <h1 id="quiz-final-score" class="display-3 fw-bold text-primary-cs mb-3">8 / 10</h1>
-                
+
                 <p id="quiz-result-msg" class="text-secondary-cs max-width-md mx-auto mb-4"></p>
-                
+
                 <div class="d-flex flex-column gap-3">
-                    <button id="quiz-save-btn" class="btn-primary-cs btn-lg rounded-pill py-3 d-flex align-items-center justify-content-center gap-2 shadow w-100">
-                        <span id="quiz-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    <button id="quiz-save-btn"
+                        class="btn-primary-cs btn-lg rounded-pill py-3 d-flex align-items-center justify-content-center gap-2 shadow w-100">
+                        <span id="quiz-spinner" class="spinner-border spinner-border-sm d-none" role="status"
+                            aria-hidden="true"></span>
                         <i class="bi bi-award-fill"></i> Save Score & Generate Certificate
                     </button>
-                    <a href="{{ url_for('quiz') }}" class="btn-outline-cs btn-lg rounded-pill py-3 justify-content-center w-100">
+                    <a href="{{ url_for('quiz') }}"
+                        class="btn-outline-cs btn-lg rounded-pill py-3 justify-content-center w-100">
                         Retake Quiz <i class="bi bi-arrow-counterclockwise"></i>
                     </a>
                 </div>
