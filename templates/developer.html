@@ -1,0 +1,2284 @@
+{% extends 'base.html' %}
+
+{% block title %}Mahir Malvi | Lead IT Architect & Personal Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============================================================
+       Mahir Malvi Personal Portfolio - Cybersecurity Accent Theme
+       ============================================================ */
+
+    :root {
+        --portfolio-glow-primary: rgba(0, 200, 255, 0.3);
+        --portfolio-glow-accent: rgba(0, 255, 157, 0.25);
+        --card-neon-border: rgba(0, 200, 255, 0.2);
+        --cyber-alert-bg: rgba(255, 75, 75, 0.1);
+        --cyber-success-bg: rgba(0, 255, 157, 0.1);
+    }
+
+    [data-theme="light"] {
+        --portfolio-glow-primary: rgba(0, 87, 255, 0.12);
+        --portfolio-glow-accent: rgba(16, 185, 129, 0.1);
+        --card-neon-border: rgba(0, 87, 255, 0.15);
+        --cyber-alert-bg: rgba(239, 68, 68, 0.08);
+        --cyber-success-bg: rgba(16, 185, 129, 0.08);
+    }
+
+    ::selection {
+        background: var(--color-primary);
+        color: #fff;
+    }
+
+    /* Layout & Section Spacing */
+    .portfolio-section {
+        padding: 4.5rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .section-title {
+        font-family: var(--font-heading);
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2.5rem;
+        letter-spacing: -0.02em;
+        text-transform: capitalize;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        width: 70px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+        border-radius: 2px;
+    }
+
+    .section-title.text-center::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* ── 1. Hero Section Styling ── */
+    .hero-container {
+        min-height: max(65vh, 550px);
+        display: flex;
+        align-items: center;
+        padding: 2.5rem 0;
+        position: relative;
+    }
+
+    .hero-visual-card {
+        position: relative;
+        display: inline-block;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+    }
+
+    .hero-avatar-wrapper {
+        position: relative;
+        display: inline-block;
+        width: 280px;
+        height: 280px;
+        z-index: 10;
+    }
+
+    .avatar-glow-ring {
+        position: absolute;
+        inset: -18px;
+        border: 2px dashed var(--color-primary);
+        border-radius: 50%;
+        animation: spin-clockwise 45s linear infinite;
+        opacity: 0.7;
+    }
+
+    .avatar-glow-ring-inner {
+        position: absolute;
+        inset: -9px;
+        border: 1.5px solid var(--color-accent);
+        border-radius: 50%;
+        animation: spin-counter-clockwise 30s linear infinite;
+        opacity: 0.5;
+    }
+
+    .portfolio-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 8px solid var(--bg-secondary);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25), 0 0 50px var(--portfolio-glow-primary);
+        background: var(--bg-tertiary);
+        transition: transform var(--transition);
+        will-change: transform;
+    }
+
+    .hero-avatar-wrapper:hover .portfolio-avatar {
+        transform: scale(1.03);
+    }
+
+    #typing-text {
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+        font-family: var(--font-heading);
+    }
+
+    #typing-text::after {
+        content: '|';
+        display: inline-block;
+        margin-left: 3px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: blink-cursor 0.9s step-end infinite;
+    }
+
+    @keyframes blink-cursor {
+
+        from,
+        to {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes spin-clockwise {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin-counter-clockwise {
+        to {
+            transform: rotate(-360deg);
+        }
+    }
+
+    .hero-glow-blob {
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+        background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 70%);
+        top: 15%;
+        right: 8%;
+        z-index: 1;
+        pointer-events: none;
+        filter: blur(50px);
+        opacity: 0.65;
+    }
+
+    /* ── 2. Stat Cards ── */
+    .portfolio-stat-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        will-change: transform;
+    }
+
+    .portfolio-stat-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 35px var(--portfolio-glow-primary);
+        border-color: var(--color-primary);
+    }
+
+    .portfolio-stat-card .stat-icon-wrapper {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        line-height: 1;
+    }
+
+    /* ── 3. Skills Matrix Grid ── */
+    .skill-card-cs {
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius-lg);
+        padding: 1.75rem;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        height: 100%;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        will-change: transform;
+    }
+
+    .skill-card-cs:hover {
+        transform: translateY(-6px);
+        border-color: var(--color-primary);
+        box-shadow: 0 15px 35px var(--portfolio-glow-primary);
+    }
+
+    .skill-progress-label {
+        font-family: var(--font-mono);
+        font-size: 0.825rem;
+        color: var(--text-secondary);
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    /* ── 4. Project Showcase Redesign ── */
+    .project-card-premium {
+        position: relative;
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        height: 100%;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        will-change: transform;
+    }
+
+    .project-card-premium:hover {
+        transform: translateY(-8px);
+        border-color: var(--color-accent);
+        box-shadow: 0 20px 45px var(--portfolio-glow-accent);
+    }
+
+    /* Cyber Console Header for Project Cards */
+    .project-console-header {
+        background: rgba(0, 0, 0, 0.15);
+        border-bottom: 1px solid var(--border-color);
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .project-console-header .dot-indicators {
+        display: flex;
+        gap: 6px;
+    }
+
+    .project-console-header .dot-indicators span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        display: inline-block;
+    }
+
+    .project-console-header .dot-indicators span.active-red {
+        background: var(--color-danger);
+        box-shadow: 0 0 8px var(--color-danger);
+    }
+
+    .project-console-header .dot-indicators span.active-green {
+        background: var(--color-success);
+        box-shadow: 0 0 8px var(--color-success);
+    }
+
+    .project-console-header .dot-indicators span.active-yellow {
+        background: var(--color-warning);
+        box-shadow: 0 0 8px var(--color-warning);
+    }
+
+    .project-image-box {
+        position: relative;
+        height: 160px;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-primary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .project-icon-overlay {
+        font-size: 5rem;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .project-card-premium:hover .project-icon-overlay {
+        transform: scale(1.12) rotate(3deg);
+    }
+
+    .project-badge-tag {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 5;
+        font-family: var(--font-mono);
+        letter-spacing: 0.05em;
+    }
+
+    .project-feature-list {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .project-feature-list li {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .project-feature-list li i {
+        color: var(--color-accent);
+        font-size: 0.95rem;
+    }
+
+    .project-status-bar {
+        background: var(--cyber-success-bg);
+        border: 1px solid var(--color-accent-glow);
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        margin-bottom: 1.25rem;
+        color: var(--color-accent);
+    }
+
+    .project-status-bar.status-alert {
+        background: var(--cyber-alert-bg);
+        border-color: rgba(239, 68, 68, 0.2);
+        color: var(--color-danger);
+    }
+
+    /* ── 5. Certifications & Credentials ── */
+    .cert-card-premium {
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius-lg);
+        padding: 1.75rem;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        will-change: transform;
+    }
+
+    .cert-card-premium:hover {
+        transform: translateY(-4px);
+        border-color: var(--color-primary);
+        box-shadow: 0 15px 40px var(--portfolio-glow-primary);
+    }
+
+    .cert-icon-container {
+        width: 75px;
+        height: 75px;
+        border-radius: var(--radius);
+        background: var(--color-primary-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        color: var(--color-primary);
+        flex-shrink: 0;
+        box-shadow: 0 6px 18px var(--portfolio-glow-primary);
+    }
+
+    /* ── 6. Interactive Timelines ── */
+    .timeline-interactive {
+        position: relative;
+        padding-left: 3rem;
+        border-left: 2.5px solid var(--border-color);
+        margin-left: 1rem;
+    }
+
+    .timeline-interactive-item {
+        position: relative;
+        padding-bottom: 4rem;
+        transition: opacity var(--transition);
+    }
+
+    .timeline-interactive-item:last-child {
+        padding-bottom: 0;
+    }
+
+    .timeline-node {
+        position: absolute;
+        left: calc(-3rem - 11px);
+        top: 4px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--bg-secondary);
+        border: 4px solid var(--color-primary);
+        box-shadow: 0 0 15px var(--portfolio-glow-primary);
+        z-index: 5;
+        transition: background var(--transition), border-color var(--transition), transform var(--transition);
+        will-change: transform;
+    }
+
+    .timeline-interactive-item:hover .timeline-node {
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+        transform: scale(1.3);
+        box-shadow: 0 0 20px var(--portfolio-glow-accent);
+    }
+
+    .timeline-date-badge {
+        font-family: var(--font-mono);
+        font-size: 0.775rem;
+        font-weight: 600;
+        padding: 0.35rem 0.9rem;
+        border-radius: 2rem;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    /* ── 7. Interest Grid ── */
+    .interest-pill {
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        height: 100%;
+        will-change: transform;
+    }
+
+    .interest-pill:hover {
+        transform: translateY(-4px);
+        border-color: var(--color-primary);
+        box-shadow: 0 8px 25px var(--portfolio-glow-primary);
+        background: var(--bg-tertiary);
+    }
+
+    .interest-icon-box {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--color-primary-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        color: var(--color-primary);
+        flex-shrink: 0;
+    }
+
+    /* ── 8. Secure Contact Section ── */
+    .contact-info-item {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 1.5rem;
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius);
+        margin-bottom: 1.25rem;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .contact-info-item:hover {
+        transform: translateX(4px);
+        border-color: var(--color-primary);
+    }
+
+    .contact-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        border-radius: var(--radius-sm);
+        background: var(--color-primary-light);
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px var(--portfolio-glow-primary);
+    }
+
+    /* Form Floating Labels Styling Override */
+    .form-floating>.form-control-cs {
+        background: var(--bg-primary);
+        border: 1.5px solid var(--border-color);
+        color: var(--text-primary);
+        transition: all var(--transition);
+    }
+
+    .form-floating>.form-control-cs:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 15px var(--portfolio-glow-primary);
+        background: var(--bg-secondary);
+    }
+
+    .form-floating>label {
+        color: var(--text-secondary) !important;
+        transition: all var(--transition);
+    }
+
+    .form-floating>label::after {
+        background-color: var(--bg-secondary) !important;
+        border-radius: var(--radius-sm);
+    }
+
+    .form-floating>.form-control-cs:focus~label,
+    .form-floating>.form-control-cs:not(:placeholder-shown)~label,
+    .form-floating>.form-control-cs:-webkit-autofill~label {
+        color: var(--color-primary) !important;
+        opacity: 0.85;
+        transform: scale(0.85) translateY(-0.75rem) translateX(0.15rem);
+    }
+
+    /* Hide placeholder by default to prevent overlap with floating label */
+    .form-floating>.form-control-cs::placeholder {
+        color: transparent !important;
+    }
+
+    /* Show placeholder on focus */
+    .form-floating>.form-control-cs:focus::placeholder {
+        color: var(--text-muted) !important;
+    }
+
+    /* Modal Styling Adjustments */
+    .modal-content-cyber {
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-header-cyber {
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.5rem 2rem;
+    }
+
+    .modal-body-cyber {
+        padding: 2rem;
+    }
+
+    .modal-footer-cyber {
+        border-top: 1px solid var(--border-color);
+        padding: 1.25rem 2rem;
+    }
+
+    .modal-tech-badge {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-color);
+        padding: 0.25rem 0.65rem;
+        border-radius: 0.25rem;
+        color: var(--text-secondary);
+    }
+
+    /* ── Technology Arsenal Grid & Cards ── */
+    .tech-arsenal-row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.5rem;
+    }
+
+    .tech-arsenal-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius-lg);
+        padding: 1.75rem;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        will-change: transform;
+    }
+
+    .tech-arsenal-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--color-primary);
+        box-shadow: 0 15px 35px var(--portfolio-glow-primary);
+    }
+
+    .tech-card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.75rem;
+    }
+
+    .tech-card-icon {
+        font-size: 1.8rem;
+        line-height: 1;
+    }
+
+    .tech-list {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .tech-list li {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .tech-list li:last-child {
+        margin-bottom: 0;
+    }
+
+    /* ── Achievements Section ── */
+    .achievements-container {
+        position: relative;
+    }
+
+    .achievement-item {
+        background: var(--glass-bg);
+        border: 1px solid var(--card-neon-border);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        align-items: flex-start;
+    }
+
+    .achievement-item:hover {
+        transform: translateY(-4px);
+        border-color: var(--color-primary);
+        box-shadow: 0 10px 25px var(--portfolio-glow-primary);
+    }
+
+    .achievement-badge {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--color-primary-light);
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px var(--portfolio-glow-primary);
+    }
+
+    .achievement-details {
+        flex-grow: 1;
+    }
+
+    /* ── Floating Quick Navigation Dots ── */
+    .portfolio-quick-nav {
+        position: fixed;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 1.25rem 0.65rem;
+        border-radius: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--card-neon-border);
+    }
+
+    .quick-nav-dot {
+        position: relative;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--text-muted);
+        transition: all var(--transition);
+        display: block;
+    }
+
+    .quick-nav-dot:hover,
+    .quick-nav-dot.active {
+        background: var(--color-primary);
+        box-shadow: 0 0 10px var(--color-primary);
+        transform: scale(1.3);
+    }
+
+    .quick-nav-label {
+        position: absolute;
+        right: 22px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        border: 1px solid var(--border-color);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition), transform var(--transition);
+        white-space: nowrap;
+        transform: translateY(-50%) translateX(10px);
+    }
+
+    .quick-nav-dot:hover .quick-nav-label {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+
+    /* ── Responsive Design — Mobile-First Breakpoints ── */
+
+    /* ─ Laptop & Tablet Landscape (≤ 1199px) ─ */
+    @media (max-width: 1199px) {
+        .hero-container {
+            padding: 2rem 0;
+        }
+
+        .hero-avatar-wrapper {
+            width: 250px;
+            height: 250px;
+        }
+
+        .tech-arsenal-row {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* ─ Tablet Portrait & Small Laptop (≤ 991px) ─ */
+    @media (max-width: 991px) {
+        .hero-container {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .hero-container .col-lg-7 {
+            order: 2;
+        }
+
+        .hero-container .col-lg-5 {
+            order: 1;
+        }
+
+        .hero-avatar-wrapper {
+            width: 220px;
+            height: 220px;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-glow-ring {
+            inset: -12px;
+        }
+
+        .avatar-glow-ring-inner {
+            inset: -6px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-section {
+            padding: 3.5rem 0;
+        }
+
+        /* Skills: 2-col on tablet */
+        #skills-matrix-section .col-lg-4 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .timeline-interactive {
+            padding-left: 2.25rem;
+        }
+
+        .timeline-node {
+            left: calc(-2.25rem - 11px);
+        }
+    }
+
+    /* ─ Mobile Large (≤ 768px) ─ */
+    @media (max-width: 768px) {
+        .hero-container {
+            padding: 2.25rem 0;
+            min-height: auto;
+        }
+
+        .hero-glow-blob {
+            width: 280px;
+            height: 280px;
+            opacity: 0.35;
+        }
+
+        .portfolio-section {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 1.85rem;
+            margin-bottom: 1.75rem;
+        }
+
+        /* Hero heading font scale */
+        h1.display-3 {
+            font-size: clamp(1.8rem, 6vw, 2.4rem) !important;
+        }
+
+        /* CTA buttons: full-width stack */
+        .hero-container .d-flex.flex-wrap.gap-3 {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-container .btn-primary-cs,
+        .hero-container .btn-outline-cs {
+            width: 100%;
+            max-width: 280px;
+            justify-content: center;
+        }
+
+        /* Skills: single column on mobile */
+        #skills-matrix-section .col-lg-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        /* Project cards: full width */
+        .project-card-premium .p-4 {
+            padding: 1.25rem !important;
+        }
+
+        /* Cert card: stack vertically */
+        .cert-card-premium {
+            padding: 1.75rem;
+        }
+
+        /* Contact section: stack columns */
+        #contact .col-lg-5,
+        #contact .col-lg-7 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        /* Interest pills: 2-col */
+        .col-md-6.col-lg-3 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        /* Stat cards: 2×2 */
+        .portfolio-stat-card {
+            padding: 1.5rem;
+        }
+
+        .tech-arsenal-row {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    /* ─ Mobile Medium (≤ 576px) ─ */
+    @media (max-width: 576px) {
+        .portfolio-section {
+            padding: 2.5rem 0;
+        }
+
+        .section-title {
+            font-size: 1.65rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-avatar-wrapper {
+            width: 180px;
+            height: 180px;
+        }
+
+        .avatar-glow-ring {
+            inset: -10px;
+        }
+
+        .avatar-glow-ring-inner {
+            inset: -5px;
+        }
+
+        /* Timeline: tighter layout */
+        .timeline-interactive {
+            padding-left: 1.75rem;
+            margin-left: 0;
+        }
+
+        .timeline-node {
+            left: calc(-1.75rem - 11px);
+        }
+
+        .cert-card-premium {
+            padding: 1.25rem;
+        }
+
+        /* Interest pills: full width */
+        .col-md-6.col-lg-3 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        /* Stat cards: 1-col */
+        .col-sm-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .skill-card-cs {
+            padding: 1.5rem;
+        }
+
+        /* Contact form: reduce padding */
+        .glass-card.p-4.p-md-5 {
+            padding: 1.25rem !important;
+        }
+
+        /* Modal: no horizontal overflow */
+        .modal-body-cyber,
+        .modal-header-cyber,
+        .modal-footer-cyber {
+            padding: 1.25rem;
+        }
+
+        /* Reduce hero social row font */
+        .hero-container .d-flex.gap-4 {
+            gap: 1.25rem !important;
+        }
+
+        .tech-arsenal-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ─ Mobile Small (≤ 400px) ─ */
+    @media (max-width: 400px) {
+        .portfolio-section {
+            padding: 2.25rem 0;
+        }
+
+        .section-title {
+            font-size: 1.45rem;
+        }
+
+        .hero-avatar-wrapper {
+            width: 155px;
+            height: 155px;
+        }
+
+        .portfolio-stat-card {
+            padding: 1rem;
+        }
+
+        .skill-card-cs {
+            padding: 1.25rem;
+        }
+
+        /* Prevent long email from overflowing */
+        .contact-info-item a {
+            font-size: 0.82rem;
+            word-break: break-all;
+        }
+
+        .interest-pill {
+            gap: 0.75rem;
+            padding: 1rem;
+        }
+
+        .interest-icon-box {
+            width: 44px;
+            height: 44px;
+            font-size: 1.35rem;
+        }
+    }
+
+    /* ─ Mobile Extra Small (≤ 340px) ─ */
+    @media (max-width: 340px) {
+        .hero-avatar-wrapper {
+            width: 130px;
+            height: 130px;
+        }
+
+        .hero-container h1.display-3 {
+            font-size: 1.6rem !important;
+        }
+
+        .tech-arsenal-card {
+            padding: 1.25rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="position-relative overflow-hidden">
+    <!-- Floating Quick Navigation Dots -->
+    <div class="portfolio-quick-nav d-none d-xl-flex">
+        <a href="#hero" class="quick-nav-dot active" title="Top / Hero">
+            <span class="quick-nav-label">Intro</span>
+        </a>
+        <a href="#about" class="quick-nav-dot" title="About Me">
+            <span class="quick-nav-label">About</span>
+        </a>
+        <a href="#education" class="quick-nav-dot" title="Education Pathway">
+            <span class="quick-nav-label">Education</span>
+        </a>
+        <a href="#skills" class="quick-nav-dot" title="Skills Matrix">
+            <span class="quick-nav-label">Skills</span>
+        </a>
+        <a href="#tech-arsenal" class="quick-nav-dot" title="Technology Arsenal">
+            <span class="quick-nav-label">Tech Arsenal</span>
+        </a>
+        <a href="#projects" class="quick-nav-dot" title="Featured Projects">
+            <span class="quick-nav-label">Projects</span>
+        </a>
+        <a href="#certifications" class="quick-nav-dot" title="Certifications">
+            <span class="quick-nav-label">Certifications</span>
+        </a>
+        <a href="#achievements" class="quick-nav-dot" title="Achievements">
+            <span class="quick-nav-label">Achievements</span>
+        </a>
+        <a href="#interests" class="quick-nav-dot" title="Career Interests">
+            <span class="quick-nav-label">Interests</span>
+        </a>
+        <a href="#contact" class="quick-nav-dot" title="Contact Me">
+            <span class="quick-nav-label">Contact</span>
+        </a>
+    </div>
+
+    <!-- Ambient Blur Background -->
+    <div class="hero-glow-blob"></div>
+
+    <!-- 1. Hero Section -->
+    <section class="hero-container position-relative z-3" id="hero">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Details -->
+                <div class="col-lg-7 order-2 order-lg-1 text-center text-lg-start" data-aos="fade-right">
+                    <div class="badge-cs badge-accent mb-3 font-monospace py-1.5 px-3 shadow-sm border-cs">
+                        <i class="bi bi-shield-lock-fill"></i> RECRUITER PORTAL ONLINE
+                    </div>
+
+                    <h1 class="display-3 fw-bold mb-2 text-primary"
+                        style="font-family: var(--font-heading); tracking: -0.02em;">
+                        Mahir Mahendrakumar Malvi
+                    </h1>
+
+                    <h2 class="fs-4 text-secondary-cs mb-4 font-monospace">
+                        I'm a <span id="typing-text"
+                            data-words='["Cybersecurity Enthusiast", "UI/UX Designer", "Web Developer", "Secure App Architect"]'></span>
+                    </h2>
+
+                    <p class="text-secondary-cs mb-5 leading-relaxed mx-auto mx-lg-0"
+                        style="max-width: 600px; font-size: 1.05rem;">
+                        Passionate about constructing robust, secure software structures, designing premium visual
+                        interfaces, and investigating systemic exploits. Focused on bringing together the logic of
+                        defensive cybersecurity with user-centric frontend experiences.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start mb-5">
+                        <a href="{{ url_for('static', filename='uploads/mock_resume.pdf') }}" download
+                            class="btn-primary-cs shadow-lg px-4 py-3">
+                            <i class="bi bi-download"></i> Download Resume
+                        </a>
+                        <a href="#contact" class="btn-outline-cs px-4 py-3">
+                            <i class="bi bi-envelope-fill"></i> Contact Me
+                        </a>
+                    </div>
+
+                    <!-- Social Channels -->
+                    <div class="d-flex gap-4 justify-content-center justify-content-lg-start align-items-center">
+                        <span class="text-muted-cs small font-monospace">CONNECT PIPELINE:</span>
+                        <a href="https://linkedin.com/in/mahir-malvi-b122b5303/" target="_blank"
+                            class="text-secondary-cs fs-4 hover-primary transition-all" title="LinkedIn Profile">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/mahirmalvi" target="_blank"
+                            class="text-secondary-cs fs-4 hover-primary transition-all" title="GitHub System">
+                            <i class="bi bi-github"></i>
+                        </a>
+                        <a href="mailto:malvimahirm@gmail.com"
+                            class="text-secondary-cs fs-4 hover-primary transition-all" title="Secure Email SMTP">
+                            <i class="bi bi-envelope-at-fill"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Avatar Visuals -->
+                <div class="col-lg-5 order-1 order-lg-2 text-center" data-aos="fade-left">
+                    <div class="hero-visual-card position-relative d-inline-block">
+                        <div class="hero-glow"></div>
+                        <div class="hero-avatar-wrapper">
+                            <!-- Dashed Rotating Border Rings -->
+                            <div class="avatar-glow-ring"></div>
+                            <div class="avatar-glow-ring-inner"></div>
+                            <!-- Primary Avatar Image -->
+                            <img src="{{ url_for('static', filename='uploads/developer_avatar.png') }}"
+                                alt="Mahir Mahendrakumar Malvi Profile Picture" class="portfolio-avatar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. About & Statistics Section -->
+    <section class="portfolio-section bg-cs-secondary position-relative z-3" id="about">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Bio info -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="text-primary-cs font-monospace small mb-2 d-block">SECURE_DOSSIER //
+                        ACCESS_GRANTED</span>
+                    <h3 class="section-title text-primary">About Me</h3>
+                    <p class="text-secondary-cs leading-relaxed mb-4">
+                        I am Mahir Mahendrakumar Malvi, an Information Technology student with a strong drive toward
+                        Cybersecurity, UI/UX Design, and Web Development. I focus on creating secure digital products,
+                        designing clean and intuitive user interfaces, and researching security vulnerabilities to
+                        construct impenetrable platforms.
+                    </p>
+                    <p class="text-secondary-cs leading-relaxed mb-5">
+                        My career objective is to apply my creativity, engineering skills, and deductive reasoning to
+                        develop state-of-the-art secure applications and help companies secure their customer data
+                        against potential threat vectors.
+                    </p>
+
+                    <!-- Career Objective Alert Badge -->
+                    <div class="p-4 rounded-4 bg-cs-tertiary border-cs d-flex gap-3 align-items-start">
+                        <div class="text-primary fs-3"><i class="bi bi-bullseye"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Career Objective</h6>
+                            <p class="text-muted-cs small mb-0 font-monospace">
+                                Apply technical cybersecurity mechanisms and optimized UI/UX architectures to construct
+                                robust digital defenses and sleek digital experiences.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats and Metrics -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="row g-4">
+                        <!-- Stat card 1 -->
+                        <div class="col-sm-6">
+                            <div class="portfolio-stat-card">
+                                <div class="fs-2 text-primary mb-2"><i class="bi bi-rocket-takeoff-fill"></i></div>
+                                <h4 class="fw-bold text-primary mb-1">
+                                    <span class="counter-number" data-target="9">0</span>.5+
+                                </h4>
+                                <span class="text-muted-cs small font-monospace uppercase">Dedication Factor</span>
+                            </div>
+                        </div>
+
+                        <!-- Stat card 2 -->
+                        <div class="col-sm-6">
+                            <div class="portfolio-stat-card">
+                                <div class="fs-2 text-accent mb-2"><i class="bi bi-folder-check"></i></div>
+                                <h4 class="fw-bold text-accent mb-1">
+                                    <span class="counter-number" data-target="4">0</span>+
+                                </h4>
+                                <span class="text-muted-cs small font-monospace uppercase">Projects Configured</span>
+                            </div>
+                        </div>
+
+                        <!-- Stat card 3 -->
+                        <div class="col-sm-6">
+                            <div class="portfolio-stat-card">
+                                <div class="fs-2 text-warning mb-2"><i class="bi bi-cpu-fill"></i></div>
+                                <h4 class="fw-bold text-warning mb-1">
+                                    <span class="counter-number" data-target="10">0</span>+
+                                </h4>
+                                <span class="text-muted-cs small font-monospace uppercase">Tools & Tech Mastered</span>
+                            </div>
+                        </div>
+
+                        <!-- Stat card 4 -->
+                        <div class="col-sm-6">
+                            <div class="portfolio-stat-card">
+                                <div class="fs-2 text-success mb-2"><i class="bi bi-patch-check-fill"></i></div>
+                                <h4 class="fw-bold text-success mb-1">
+                                    <span class="counter-number" data-target="2">0</span>
+                                </h4>
+                                <span class="text-muted-cs small font-monospace uppercase">Verified Credentials</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Education Timeline Section -->
+    <section class="portfolio-section position-relative z-3" id="education">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <span
+                        class="text-primary-cs font-monospace small mb-2 d-block text-center">CHRONOLOGICAL_LEDGER</span>
+                    <h3 class="section-title text-primary d-block text-center mx-auto">Education Pathway</h3>
+
+                    <!-- Interactive Timeline -->
+                    <div class="timeline-interactive mt-5">
+                        <!-- Node 1 -->
+                        <div class="timeline-interactive-item">
+                            <div class="timeline-node"></div>
+                            <span class="timeline-date-badge">2026 — PRESENT</span>
+                            <h4 class="fw-bold text-primary mb-1">Bachelor of Technology (B.Tech) in IT</h4>
+                            <h6 class="text-secondary-cs mb-2">Aditya Silver Oak University</h6>
+                            <p class="text-muted-cs small mb-0 leading-relaxed">
+                                Currently pursuing specialized undergraduate coursework focusing on advanced programming
+                                architecture, network defense systems, information security protocols, and
+                                human-computer UI/UX interaction principles.
+                            </p>
+                        </div>
+
+                        <!-- Node 2 -->
+                        <div class="timeline-interactive-item">
+                            <div class="timeline-node"></div>
+                            <span class="timeline-date-badge">2022 — 2025</span>
+                            <h4 class="fw-bold text-primary mb-1">Diploma in Information Technology</h4>
+                            <h6 class="text-secondary-cs mb-2">Government Polytechnic Kheda (GTU)</h6>
+                            <p class="text-muted-cs small mb-0 leading-relaxed">
+                                Completed primary technical engineering foundation including data structures, databases
+                                (SQL), basic cybersecurity configurations, web layout development, and computer
+                                architecture frameworks.
+                            </p>
+                        </div>
+
+                        <!-- Node 3 -->
+                        <div class="timeline-interactive-item">
+                            <div class="timeline-node"></div>
+                            <span class="timeline-date-badge">COMPLETED IN 2022</span>
+                            <h4 class="fw-bold text-primary mb-1">Secondary School Certificate (SSC)</h4>
+                            <h6 class="text-secondary-cs mb-2">Super High School, Ahmedabad</h6>
+                            <p class="text-muted-cs small mb-0 leading-relaxed">
+                                Successfully completed the 10th Grade (SSC) examination, developing strong foundations
+                                in mathematics, science, analytical thinking, problem-solving, and communication skills.
+                                Demonstrated academic dedication and the ability to learn and apply concepts across a
+                                range of subjects.
+                            </p>
+                        </div>
+                    </div><!-- /.timeline-interactive -->
+                </div><!-- /.col-lg-8 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /Education -->
+
+    <!-- 4. Interactive Skills Matrix Section -->
+    <section class="portfolio-section bg-cs-secondary position-relative z-3" id="skills">
+        <div class="container">
+            <span class="text-primary-cs font-monospace small mb-2 d-block text-center">CAPABILITIES_METRICS</span>
+            <h3 class="section-title text-primary d-block text-center mx-auto">Technical Skill Matrix</h3>
+
+            <div class="row g-4 mt-2">
+                <!-- Group 1: Cybersecurity & Design Strategy -->
+                <div class="col-lg-4" data-aos="fade-right">
+                    <div class="skill-card-cs">
+                        <div class="fs-2 text-primary mb-3"><i class="bi bi-shield-fill-check"></i></div>
+                        <h5 class="fw-bold mb-4">Security & Strategy</h5>
+
+                        <div class="mb-4">
+                            <div class="skill-progress-label"><span>Cybersecurity</span><span>90%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="skill-progress-label"><span>UI/UX Design</span><span>88%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 88%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-0">
+                            <div class="skill-progress-label"><span>Digital Marketing</span><span>75%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: Core Programming -->
+                <div class="col-lg-4" data-aos="fade-up">
+                    <div class="skill-card-cs">
+                        <div class="fs-2 text-accent mb-3"><i class="bi bi-code-slash"></i></div>
+                        <h5 class="fw-bold mb-4">Core Programming</h5>
+
+                        <div class="mb-4">
+                            <div class="skill-progress-label"><span>Python</span><span>88%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 88%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="skill-progress-label"><span>Java</span><span>75%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 75%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-0">
+                            <div class="skill-progress-label"><span>JavaScript</span><span>80%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 3: Frontend & Tools -->
+                <div class="col-lg-4" data-aos="fade-left">
+                    <div class="skill-card-cs">
+                        <div class="fs-2 text-warning mb-3"><i class="bi bi-bezier2"></i></div>
+                        <h5 class="fw-bold mb-4">Frontend & Creative Tools</h5>
+
+                        <div class="mb-3">
+                            <div class="skill-progress-label"><span>HTML</span><span>92%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 92%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="skill-progress-label"><span>CSS</span><span>90%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="skill-progress-label"><span>Figma</span><span>85%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="skill-progress-label"><span>Canva</span><span>90%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-0">
+                            <div class="skill-progress-label"><span>Video Editing</span><span>78%</span></div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4.5. Technology Arsenal Section -->
+    <section class="portfolio-section bg-cs-tertiary position-relative z-3" id="tech-arsenal">
+        <div class="container">
+            <span class="text-primary-cs font-monospace small mb-2 d-block text-center">TECHNICAL_ARSENAL //
+                RESOURCES</span>
+            <h3 class="section-title text-primary d-block text-center mx-auto">Technology Arsenal</h3>
+
+            <!-- Stats Grid -->
+            <div class="row g-4 mb-5">
+                <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="portfolio-stat-card tech-stat-card">
+                        <div class="fs-2 text-primary mb-2"><i class="bi bi-cpu"></i></div>
+                        <h4 class="fw-bold text-primary mb-1">
+                            <span class="counter-number" data-target="10">0</span>+
+                        </h4>
+                        <span class="text-muted-cs small font-monospace text-uppercase">Tools & Tech</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="portfolio-stat-card tech-stat-card">
+                        <div class="fs-2 text-accent mb-2"><i class="bi bi-folder-check"></i></div>
+                        <h4 class="fw-bold text-accent mb-1">
+                            <span class="counter-number" data-target="3">0</span>+
+                        </h4>
+                        <span class="text-muted-cs small font-monospace text-uppercase">Secure Projects</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="portfolio-stat-card tech-stat-card">
+                        <div class="fs-2 text-warning mb-2"><i class="bi bi-patch-check"></i></div>
+                        <h4 class="fw-bold text-warning mb-1">
+                            <span class="counter-number" data-target="1">0</span>+
+                        </h4>
+                        <span class="text-muted-cs small font-monospace text-uppercase">Certifications</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="portfolio-stat-card tech-stat-card">
+                        <div class="fs-2 text-success mb-2"><i class="bi bi-mortarboard"></i></div>
+                        <h4 class="fw-bold text-success mb-1">
+                            <span class="counter-number" data-target="2027">0</span>
+                        </h4>
+                        <span class="text-muted-cs small font-monospace text-uppercase">B.Tech Graduate</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- 5. Defensive Projects Section -->
+    <section class="portfolio-section position-relative z-3" id="projects">
+        <div class="container">
+            <span class="text-primary-cs font-monospace small mb-2 d-block text-center">SYSTEM_DEPLOYMENTS //
+                REPOSITORIES</span>
+            <h3 class="section-title text-primary d-block text-center mx-auto">Featured Projects</h3>
+
+            <div class="row g-4 mt-2">
+                <!-- Project 1: Phishing Detector -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-card-premium">
+                        <!-- Cyber Console Header -->
+                        <div class="project-console-header">
+                            <span>SYSTEM_SHELL // PORT_01</span>
+                            <div class="dot-indicators">
+                                <span class="active-green" title="System Online"></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <!-- Image & Icon Overlay -->
+                        <div class="project-image-box">
+                            <i class="bi bi-shield-lock-fill project-icon-overlay text-primary"></i>
+                            <span class="badge-cs badge-danger project-badge-tag"><i class="bi bi-activity"></i> LIVE
+                                SCANNERS</span>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                            <div>
+                                <h4 class="fw-bold text-primary mb-2">Phishing Detection & Awareness Platform</h4>
+                                <p class="text-secondary-cs small mb-3">
+                                    An intelligent cybersecurity platform that detects phishing URLs, analyzes
+                                    suspicious websites, educates users about phishing attacks, and improves online
+                                    security awareness.
+                                </p>
+
+                                <div class="project-status-bar">
+                                    <span>SYSTEM_STATUS:</span>
+                                    <span class="fw-bold"><i class="bi bi-shield-check"></i> SHIELD MODE ACTIVE</span>
+                                </div>
+
+                                <h6 class="fw-bold text-primary-cs small mb-2">Key Features:</h6>
+                                <ul class="project-feature-list">
+                                    <li><i class="bi bi-check-circle-fill"></i> URL Analysis</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Phishing Detection</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Security Awareness</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Threat Classification</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> User Dashboard</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Real-Time Results</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                    <span class="tech-badge">HTML</span>
+                                    <span class="tech-badge">CSS</span>
+                                    <span class="tech-badge">JavaScript</span>
+                                    <span class="tech-badge">Python</span>
+                                    <span class="tech-badge">Machine Learning</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="/" class="btn-primary-cs btn-sm rounded-pill py-2 px-3 shadow"
+                                        style="font-size: 0.8rem;">
+                                        <i class="bi bi-box-arrow-up-right"></i> Run App
+                                    </a>
+                                    <button class="btn btn-outline-cs btn-sm rounded-pill py-2 px-3"
+                                        data-bs-toggle="modal" data-bs-target="#projectPhishingModal"
+                                        style="font-size: 0.8rem;">
+                                        <i class="bi bi-info-circle"></i> Inspect Logic
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Password Generator -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-card-premium">
+                        <!-- Cyber Console Header -->
+                        <div class="project-console-header">
+                            <span>SYSTEM_SHELL // PORT_02</span>
+                            <div class="dot-indicators">
+                                <span class="active-yellow" title="Auditing State"></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <!-- Image & Icon Overlay -->
+                        <div class="project-image-box">
+                            <i class="bi bi-key-fill project-icon-overlay text-accent"></i>
+                            <span class="badge-cs badge-primary project-badge-tag"><i class="bi bi-shield-check"></i>
+                                STRENGTH AUDIT</span>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                            <div>
+                                <h4 class="fw-bold text-primary mb-2">Password Generator & Strength Analyzer</h4>
+                                <p class="text-secondary-cs small mb-3">
+                                    A security tool that generates strong passwords and analyzes password strength using
+                                    modern security standards.
+                                </p>
+
+                                <div class="project-status-bar status-alert">
+                                    <span>CREDENTIAL_STATUS:</span>
+                                    <span class="fw-bold"><i class="bi bi-cpu"></i> ENTROPY RATIO CHECK</span>
+                                </div>
+
+                                <h6 class="fw-bold text-primary-cs small mb-2">Key Features:</h6>
+                                <ul class="project-feature-list">
+                                    <li><i class="bi bi-check-circle-fill"></i> Secure Password Generation</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Password Strength Analysis</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Entropy Calculation</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Security Recommendations</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Copy to Clipboard</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Real-Time Validation</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                    <span class="tech-badge">HTML</span>
+                                    <span class="tech-badge">CSS</span>
+                                    <span class="tech-badge">JavaScript</span>
+                                    <span class="tech-badge">Python</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="/toolkit" class="btn-primary-cs btn-sm rounded-pill py-2 px-3 shadow"
+                                        style="font-size: 0.8rem;">
+                                        <i class="bi bi-box-arrow-up-right"></i> Open Tool
+                                    </a>
+                                    <button class="btn btn-outline-cs btn-sm rounded-pill py-2 px-3"
+                                        data-bs-toggle="modal" data-bs-target="#projectPasswordModal"
+                                        style="font-size: 0.8rem;">
+                                        <i class="bi bi-info-circle"></i> Inspect Logic
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: E-Commerce Website -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card-premium">
+                        <!-- Cyber Console Header -->
+                        <div class="project-console-header">
+                            <span>SYSTEM_SHELL // PORT_03</span>
+                            <div class="dot-indicators">
+                                <span class="active-green" title="System Online"></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <!-- Image & Icon Overlay -->
+                        <div class="project-image-box">
+                            <i class="bi bi-cart-fill project-icon-overlay text-success"></i>
+                            <span class="badge-cs badge-success project-badge-tag"><i class="bi bi-check-circle"></i>
+                                COMPLETED</span>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                            <div>
+                                <h4 class="fw-bold text-primary mb-2">Responsive E-Commerce Platform</h4>
+                                <p class="text-secondary-cs small mb-3">
+                                    Designed and developed a responsive E-Commerce website utilizing frontend layout
+                                    strategies to deliver interactive product experiences.
+                                </p>
+
+                                <div class="project-status-bar">
+                                    <span>TRANSACTION_STATUS:</span>
+                                    <span class="fw-bold"><i class="bi bi-cart-check"></i> PIPELINE COMPLETED</span>
+                                </div>
+
+                                <h6 class="fw-bold text-primary-cs small mb-2">Key Features:</h6>
+                                <ul class="project-feature-list">
+                                    <li><i class="bi bi-check-circle-fill"></i> Responsive Layout</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Shopping Cart System</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Interactive Product Filtering</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Dynamic Search Functionality</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Checkout Flow Simulation</li>
+                                    <li><i class="bi bi-check-circle-fill"></i> Smooth Animations & Transitions</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <div class="d-flex flex-wrap gap-1 mb-4">
+                                    <span class="tech-badge">HTML5</span>
+                                    <span class="tech-badge">CSS3</span>
+                                    <span class="tech-badge">JavaScript</span>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn-primary-cs btn-sm rounded-pill py-2 px-3 shadow"
+                                        style="font-size: 0.8rem;" disabled>
+                                        <i class="bi bi-slash-circle"></i> Local Build
+                                    </button>
+                                    <button class="btn btn-outline-cs btn-sm rounded-pill py-2 px-3"
+                                        data-bs-toggle="modal" data-bs-target="#projectEcommerceModal"
+                                        style="font-size: 0.8rem;">
+                                        <i class="bi bi-info-circle"></i> Inspect Logic
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Certifications & Credentials Section -->
+    <section class="portfolio-section bg-cs-secondary position-relative z-3" id="certifications">
+        <div class="container">
+            <span class="text-primary-cs font-monospace small mb-2 d-block text-center">SECURITY_ACCREDITATION</span>
+            <h3 class="section-title text-primary d-block text-center mx-auto">Certifications</h3>
+
+            <div class="row justify-content-center mt-2">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="cert-card-premium">
+                        <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4">
+                            <!-- Icon -->
+                            <div class="cert-icon-container">
+                                <i class="bi bi-shield-fill-check"></i>
+                            </div>
+
+                            <!-- Details -->
+                            <div class="text-center text-md-start flex-grow-1">
+                                <span class="badge-cs badge-primary mb-2 font-monospace">IBM SECURITY</span>
+                                <h4 class="fw-bold mb-2 text-primary">IBM Vulnerability to Defense: Cybersecurity
+                                    Systems</h4>
+                                <p class="text-secondary-cs small leading-relaxed mb-4">
+                                    Successfully obtained verified cybersecurity specialization. The credential
+                                    curriculum focuses on vulnerability auditing protocols, defensive architecture
+                                    structures, threat profiling, network penetration, and security systems defense
+                                    models.
+                                </p>
+                                <div
+                                    class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start mb-4">
+                                    <span class="tech-badge"><i class="bi bi-bug text-primary-cs"></i> Vulnerability
+                                        Assessment</span>
+                                    <span class="tech-badge"><i class="bi bi-eye text-primary-cs"></i> Threat
+                                        Detection</span>
+                                    <span class="tech-badge"><i class="bi bi-patch-check text-primary-cs"></i> Defense
+                                        Frameworks</span>
+                                </div>
+                                <div class="text-center text-md-start">
+                                    <button class="btn btn-primary-cs rounded-pill px-4" data-bs-toggle="modal"
+                                        data-bs-target="#certIBMModal">
+                                        <i class="bi bi-patch-check"></i> View Verification Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6.5. Achievements Section -->
+    <section class="portfolio-section bg-cs-tertiary position-relative z-3" id="achievements">
+        <div class="container">
+            <span class="text-primary-cs font-monospace small mb-2 d-block text-center">NOTABLE_MILESTONES //
+                SUCCESS_RECORD</span>
+            <h3 class="section-title text-primary d-block text-center mx-auto">Achievements</h3>
+
+            <div class="row justify-content-center mt-2">
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="achievements-container">
+                        <!-- Achievement 1 -->
+                        <div class="achievement-item d-flex gap-4 mb-4">
+                            <div class="achievement-badge"><i class="bi bi-trophy-fill"></i></div>
+                            <div class="achievement-details">
+                                <h5 class="fw-bold text-primary mb-1">Academic Excellence in Information Technology</h5>
+                                <span class="text-muted-cs small font-monospace d-block mb-2">Silver Oak University —
+                                    2025</span>
+                                <p class="text-secondary-cs small mb-0">
+                                    Awarded recognition for maintaining outstanding academic performance and
+                                    problem-solving dedication within coursework frameworks.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Achievement 2 -->
+                        <div class="achievement-item d-flex gap-4 mb-4">
+                            <div class="achievement-badge"><i class="bi bi-shield-check"></i></div>
+                            <div class="achievement-details">
+                                <h5 class="fw-bold text-primary mb-1">IBM Cybersecurity Specialist Badge</h5>
+                                <span class="text-muted-cs small font-monospace d-block mb-2">IBM Skills Academy —
+                                    2024</span>
+                                <p class="text-secondary-cs small mb-0">
+                                    Successfully finished technical program specializing in defensive operations,
+                                    auditing, and system vulnerability assessment.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Achievement 3 -->
+                        <div class="achievement-item d-flex gap-4">
+                            <div class="achievement-badge"><i class="bi bi-code-square"></i></div>
+                            <div class="achievement-details">
+                                <h5 class="fw-bold text-primary mb-1">Interactive Cybersecurity Project Implementation
+                                </h5>
+                                <span class="text-muted-cs small font-monospace d-block mb-2">Aditya Silver Oak
+                                    University — 2025</span>
+                                <p class="text-secondary-cs small mb-0">
+                                    Spearheaded creation of the Phishing Detection & Awareness Platform, integrating AI
+                                    models with direct heuristic scans to defend users.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Career Interests Section -->
+    <section class="portfolio-section position-relative z-3" id="interests">
+        <div class="container">
+            <span class="text-primary-cs font-monospace small mb-2 d-block text-center">TARGET_SECTORS //
+                SPECULATIVE_OBJECTS</span>
+            <h3 class="section-title text-primary d-block text-center mx-auto">Career Interests</h3>
+
+            <div class="row g-4 mt-2">
+                <!-- Interest 1 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="interest-pill">
+                        <div class="interest-icon-box"><i class="bi bi-shield-fill-check"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Cybersecurity</h6>
+                            <span class="text-muted-cs small font-monospace">Network & Threat Intel</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interest 2 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="interest-pill">
+                        <div class="interest-icon-box"><i class="bi bi-palette-fill"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">UI/UX Design</h6>
+                            <span class="text-muted-cs small font-monospace">Wireframes & Assets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interest 3 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="interest-pill">
+                        <div class="interest-icon-box"><i class="bi bi-code-slash"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Web Dev</h6>
+                            <span class="text-muted-cs small font-monospace">Frontend Systems</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interest 4 -->
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="interest-pill">
+                        <div class="interest-icon-box"><i class="bi bi-safe-fill"></i></div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Secure App Dev</h6>
+                            <span class="text-muted-cs small font-monospace">Encrypted Logic</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Interactive Secure Contact Section -->
+    <section class="portfolio-section bg-cs-secondary position-relative z-3" id="contact">
+        <div class="container">
+            <span
+                class="text-primary-cs font-monospace small mb-2 d-block text-center">ESTABLISH_COMMUNICATION_LINK</span>
+            <h3 class="section-title text-primary d-block text-center mx-auto">Get In Touch</h3>
+
+            <div class="row g-5 mt-2">
+                <!-- Coordinates -->
+                <div class="col-lg-5" data-aos="fade-right">
+                    <h4 class="fw-bold mb-4">Contact Details</h4>
+                    <p class="text-secondary-cs leading-relaxed mb-5">
+                        Please establish contact via the secure links below or fill out the dashboard transmission form.
+                        I am always open to exploring professional internships,Capstones, collaborations, and
+                        cybersecurity vulnerability queries.
+                    </p>
+
+                    <!-- Mail -->
+                    <div class="contact-info-item">
+                        <div class="contact-icon-wrapper"><i class="bi bi-envelope-at-fill"></i></div>
+                        <div>
+                            <span class="text-muted-cs small font-monospace d-block">SMTP SECURE MAIL</span>
+                            <a href="mailto:malvimahirm@gmail.com"
+                                class="text-primary fw-bold text-decoration-none hover-primary">malvimahirm@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="contact-info-item">
+                        <div class="contact-icon-wrapper"><i class="bi bi-telephone-fill"></i></div>
+                        <div>
+                            <span class="text-muted-cs small font-monospace d-block">TEL DIRECT COMMS</span>
+                            <a href="tel:+919157535963"
+                                class="text-primary fw-bold text-decoration-none hover-primary">+91 91575 35963</a>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="contact-info-item">
+                        <div class="contact-icon-wrapper"><i class="bi bi-geo-alt-fill"></i></div>
+                        <div>
+                            <span class="text-muted-cs small font-monospace d-block">PHYSICAL NODAL POINT</span>
+                            <span class="text-secondary-cs fw-bold">Ahmedabad, Gujarat, India</span>
+                        </div>
+                    </div>
+
+                    <!-- GitHub -->
+                    <div class="contact-info-item">
+                        <div class="contact-icon-wrapper"><i class="bi bi-github"></i></div>
+                        <div>
+                            <span class="text-muted-cs small font-monospace d-block">SECURE GITHUB SYSTEM</span>
+                            <a href="https://github.com/mahirmalvi" target="_blank"
+                                class="text-primary fw-bold text-decoration-none hover-primary">github.com/mahirmalvi</a>
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn -->
+                    <div class="contact-info-item">
+                        <div class="contact-icon-wrapper"><i class="bi bi-linkedin"></i></div>
+                        <div>
+                            <span class="text-muted-cs small font-monospace d-block">SECURE LINKEDIN PORTAL</span>
+                            <a href="https://linkedin.com/in/mahir-malvi-b122b5303/" target="_blank"
+                                class="text-primary fw-bold text-decoration-none hover-primary">linkedin.com/in/mahir-malvi</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form Card -->
+                <div class="col-lg-7" data-aos="fade-left">
+                    <div class="glass-card p-4 p-md-5 border-cs shadow">
+                        <h5 class="fw-bold mb-4 font-monospace small text-primary-cs"><i
+                                class="bi bi-shield-fill-exclamation"></i> SECURE MESSAGE ENCRYPTION SYSTEM</h5>
+
+                        <!-- Client Action Form -->
+                        <form id="portfolio-contact-form" action="{{ url_for('contact') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                            <input type="hidden" name="subject" value="Contact Form Submission from Portfolio" />
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text"
+                                            class="form-control form-control-cs bg-transparent border-cs rounded-3"
+                                            id="floatingName" name="name" placeholder="John Doe" required
+                                            style="height: 55px;">
+                                        <label for="floatingName"
+                                            class="font-monospace text-secondary-cs small ps-3">TRANSMITTER_NAME</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email"
+                                            class="form-control form-control-cs bg-transparent border-cs rounded-3"
+                                            id="floatingEmail" name="email" placeholder="name@example.com" required
+                                            style="height: 55px;">
+                                        <label for="floatingEmail"
+                                            class="font-monospace text-secondary-cs small ps-3">REPLY_SMTP_MAIL</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control form-control-cs bg-transparent border-cs rounded-3 pt-4"
+                                    placeholder="Leave a message here" id="floatingMessage" name="message"
+                                    style="height: 140px;" required></textarea>
+                                <label for="floatingMessage"
+                                    class="font-monospace text-secondary-cs small ps-3">TRANSMISSION_PAYLOAD</label>
+                            </div>
+
+                            <button type="submit"
+                                class="btn-primary-cs w-100 py-3 rounded-pill justify-content-center shadow-lg">
+                                <i class="bi bi-send-fill"></i> ENCRYPT & SEND TRANSMISSION
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ============================================================
+     PROJECTS DETAILS AND CERTIFICATE MODALS
+     ============================================================ -->
+
+<!-- Modal: Phishing Detector -->
+<div class="modal fade" id="projectPhishingModal" tabindex="-1" aria-labelledby="projectPhishingLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-content-cyber">
+            <div class="modal-header modal-header-cyber d-flex justify-content-between align-items-center">
+                <h5 class="modal-title fw-bold text-primary" id="projectPhishingLabel">
+                    <i class="bi bi-shield-lock-fill text-danger me-2"></i> AI Phishing Detection Platform
+                </h5>
+                <button type="button" class="btn-close border-cs p-2 bg-transparent" data-bs-dismiss="modal"
+                    aria-label="Close" style="filter: var(--text-primary);"></button>
+            </div>
+            <div class="modal-body modal-body-cyber">
+                <h6 class="fw-bold text-primary mb-3">Project Summary</h6>
+                <p class="text-secondary-cs small leading-relaxed mb-4">
+                    Developed a robust B.Tech Capstone Project. This platform incorporates Machine Learning (Random
+                    Forest Classification) and detailed Heuristic Audits to evaluate link threats, coupled with a
+                    cybersecurity learning management module, interactive quizzes, dynamic printable certificates,
+                    downloadable PDF scan reports, and administrative management portals.
+                </p>
+
+                <h6 class="fw-bold text-primary mb-3">Functional Architecture</h6>
+                <ul class="text-secondary-cs small mb-4 ps-3">
+                    <li><strong>AI Link Verification:</strong> Random Forest Classifier model trained on programmed
+                        datasets.</li>
+                    <li><strong>Heuristic Audits:</strong> Evaluates URL lengths, domain symbols, redirects, and
+                        subdomain nesting.</li>
+                    <li><strong>Awareness LMS & Quizzes:</strong> Educates users through MCQs, simulated scams, and
+                        issues credentials.</li>
+                    <li><strong>PDF Report Engine:</strong> Compiles detailed scan audit reports dynamically via
+                        ReportLab.</li>
+                </ul>
+
+                <h6 class="fw-bold text-primary mb-3">Configured Stack</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="modal-tech-badge">Python Flask</span>
+                    <span class="modal-tech-badge">Scikit-Learn</span>
+                    <span class="modal-tech-badge">SQLAlchemy (SQLite)</span>
+                    <span class="modal-tech-badge">Bootstrap 5</span>
+                    <span class="modal-tech-badge">Chart.js</span>
+                    <span class="modal-tech-badge">ReportLab PDF</span>
+                </div>
+            </div>
+            <div class="modal-footer modal-footer-cyber">
+                <button type="button" class="btn btn-outline-cs rounded-pill px-4"
+                    data-bs-dismiss="modal">Close</button>
+                <a href="/" class="btn-primary-cs rounded-pill px-4">Access Application</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Password Generator -->
+<div class="modal fade" id="projectPasswordModal" tabindex="-1" aria-labelledby="projectPasswordLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-content-cyber">
+            <div class="modal-header modal-header-cyber d-flex justify-content-between align-items-center">
+                <h5 class="modal-title fw-bold text-accent" id="projectPasswordLabel">
+                    <i class="bi bi-key-fill text-accent me-2"></i> Password Generator & Strength Analyzer
+                </h5>
+                <button type="button" class="btn-close border-cs p-2 bg-transparent" data-bs-dismiss="modal"
+                    aria-label="Close" style="filter: var(--text-primary);"></button>
+            </div>
+            <div class="modal-body modal-body-cyber">
+                <h6 class="fw-bold text-accent mb-3">Project Summary</h6>
+                <p class="text-secondary-cs small leading-relaxed mb-4">
+                    A secure cryptographic credential management tool that generates secure high-entropy passwords and
+                    evaluates password strength using modern digital security standards.
+                </p>
+
+                <h6 class="fw-bold text-accent mb-3">Key Features Implemented</h6>
+                <ul class="text-secondary-cs small mb-4 ps-3">
+                    <li><strong>Secure Password Generation:</strong> Generates strong random passwords using custom
+                        complexity pools (digits, symbols, uppercase, lowercase).</li>
+                    <li><strong>Password Strength Analysis:</strong> Real-time heuristic evaluation auditing password
+                        strength and common patterns.</li>
+                    <li><strong>Entropy Calculation:</strong> Computes password entropy metrics dynamically on a 128-bit
+                        scale.</li>
+                    <li><strong>Security Recommendations:</strong> Displays suggestions for improving password
+                        complexity.</li>
+                    <li><strong>Copy to Clipboard:</strong> Direct clipboard integration to quickly copy and secure
+                        keys.</li>
+                    <li><strong>Real-Time Validation:</strong> Instant visual feedback of password strength indicators.
+                    </li>
+                </ul>
+
+                <h6 class="fw-bold text-accent mb-3">Tech Matrix</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="modal-tech-badge">HTML5 & CSS3</span>
+                    <span class="modal-tech-badge">Vanilla JavaScript</span>
+                    <span class="modal-tech-badge">Python Integration</span>
+                    <span class="modal-tech-badge">Bootstrap 5 Icons</span>
+                </div>
+            </div>
+            <div class="modal-footer modal-footer-cyber">
+                <button type="button" class="btn btn-outline-cs rounded-pill px-4"
+                    data-bs-dismiss="modal">Close</button>
+                <a href="/toolkit" class="btn-primary-cs rounded-pill px-4">Open Toolkit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: E-Commerce Project -->
+<div class="modal fade" id="projectEcommerceModal" tabindex="-1" aria-labelledby="projectEcommerceLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-content-cyber">
+            <div class="modal-header modal-header-cyber d-flex justify-content-between align-items-center">
+                <h5 class="modal-title fw-bold text-success" id="projectEcommerceLabel">
+                    <i class="bi bi-cart-fill text-success me-2"></i> Responsive E-Commerce Platform
+                </h5>
+                <button type="button" class="btn-close border-cs p-2 bg-transparent" data-bs-dismiss="modal"
+                    aria-label="Close" style="filter: var(--text-primary);"></button>
+            </div>
+            <div class="modal-body modal-body-cyber">
+                <h6 class="fw-bold text-success mb-3">Project Summary</h6>
+                <p class="text-secondary-cs small leading-relaxed mb-4">
+                    An interactive frontend E-Commerce platform built using pure web standards. It emphasizes modern
+                    user experiences, component layouts, and efficient state handling.
+                </p>
+
+                <h6 class="fw-bold text-success mb-3">Key Features Implemented</h6>
+                <ul class="text-secondary-cs small mb-4 ps-3">
+                    <li><strong>Responsive Layout:</strong> Flexbox and Grid patterns designed to load seamlessly on
+                        mobile, tablet, and widescreen viewports.</li>
+                    <li><strong>Shopping Cart System:</strong> JavaScript-backed cart tracking supporting quantity
+                        addition, item deletion, and live total calculations.</li>
+                    <li><strong>Interactive Product Filtering:</strong> Direct UI filtering based on categories, price
+                        range, and tags.</li>
+                    <li><strong>Dynamic Search Functionality:</strong> Instant product name queries filtering products
+                        in real time.</li>
+                    <li><strong>Checkout Flow Simulation:</strong> Front-end modal validation simulating a purchase
+                        process.</li>
+                    <li><strong>Animations:</strong> Lightweight CSS transitions on hover, cart adds, and layout shifts.
+                    </li>
+                </ul>
+
+                <h6 class="fw-bold text-success mb-3">Tech Matrix</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="modal-tech-badge">HTML5</span>
+                    <span class="modal-tech-badge">CSS3</span>
+                    <span class="modal-tech-badge">Vanilla JavaScript</span>
+                    <span class="modal-tech-badge">Bootstrap Icons</span>
+                </div>
+            </div>
+            <div class="modal-footer modal-footer-cyber">
+                <button type="button" class="btn btn-outline-cs rounded-pill px-4"
+                    data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Certificate Details -->
+<div class="modal fade" id="certIBMModal" tabindex="-1" aria-labelledby="certIBMLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-content-cyber">
+            <div class="modal-header modal-header-cyber d-flex justify-content-between align-items-center">
+                <h5 class="modal-title fw-bold text-primary" id="certIBMLabel">
+                    <i class="bi bi-patch-check-fill text-success me-2"></i> Verified Credentials Details
+                </h5>
+                <button type="button" class="btn-close border-cs p-2 bg-transparent" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-body-cyber text-center">
+                <div class="fs-1 text-success mb-3"><i class="bi bi-shield-fill-check"></i></div>
+                <h5 class="fw-bold mb-2">IBM Cybersecurity Specialist</h5>
+                <p class="text-muted-cs small font-monospace mb-4">CREDENTIAL_UUID: IBM-SEC-8923-MM</p>
+
+                <div class="p-3 bg-cs-tertiary rounded-3 border-cs text-start mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-secondary-cs small font-monospace">ISSUER:</span>
+                        <span class="fw-bold small">IBM Skills Academy</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-secondary-cs small font-monospace">HOLDER:</span>
+                        <span class="fw-bold small">Mahir Mahendrakumar Malvi</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-secondary-cs small font-monospace">STATUS:</span>
+                        <span class="badge-cs badge-success font-monospace py-0.5">ACTIVE & VERIFIED</span>
+                    </div>
+                </div>
+
+                <p class="text-secondary-cs small mb-0">
+                    This certification confirms proficiency in IBM's defensive framework models, structural auditing
+                    methodologies, and response actions to cyber attacks.
+                </p>
+            </div>
+            <div class="modal-footer modal-footer-cyber">
+                <button type="button" class="btn btn-outline-cs w-100 rounded-pill" data-bs-dismiss="modal">Close Audit
+                    View</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. GSAP ScrollTrigger for Skill Progress Bars
+        const skillSection = document.getElementById("skills");
+        if (skillSection && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.from(".skill-bar-fill", {
+                scrollTrigger: {
+                    trigger: "#skills",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                width: "0%",
+                duration: 1.2,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+        }
+
+        // 2. GSAP ScrollTrigger for cards entry animations (anti-CLS: transform and opacity only)
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Tech arsenal cards
+            gsap.from(".tech-arsenal-card", {
+                scrollTrigger: {
+                    trigger: ".tech-arsenal-row",
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                y: 35,
+                opacity: 0,
+                duration: 0.7,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+
+            // Project cards
+            gsap.from(".project-card-premium", {
+                scrollTrigger: {
+                    trigger: ".project-card-premium",
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power2.out"
+            });
+
+            // Achievement items
+            gsap.from(".achievement-item", {
+                scrollTrigger: {
+                    trigger: ".achievements-container",
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                x: -30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.15,
+                ease: "power2.out"
+            });
+        }
+
+        // 3. Floating Quick Navigation Active State with IntersectionObserver
+        const sections = document.querySelectorAll("section[id]");
+        const navDots = document.querySelectorAll(".quick-nav-dot");
+
+        if (sections.length && navDots.length && 'IntersectionObserver' in window) {
+            const observerOptions = {
+                root: null,
+                rootMargin: "-25% 0px -25% 0px", // Trigger when section occupies the center of viewport
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute("id");
+                        navDots.forEach(dot => {
+                            if (dot.getAttribute("href") === `#${activeId}`) {
+                                dot.classList.add("active");
+                            } else {
+                                dot.classList.remove("active");
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Smooth scroll fallback for quick nav links
+        navDots.forEach(dot => {
+            dot.addEventListener("click", (e) => {
+                e.preventDefault();
+                const targetId = dot.getAttribute("href");
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

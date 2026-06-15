@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+
+{% block title %}Security Command Center | CyberShield AI{% endblock %}
+
+{% block content %}
+<!-- Hidden data container for Chart.js rendering -->
+<div id="stats-data" data-safe="{{ safe_count }}" data-phish="{{ phish_count }}" class="d-none"></div>
+
+<div class="dashboard-wrapper">
+    <!-- Collapsible SaaS Sidebar -->
+    <aside class="sidebar-cs sidebar-collapsed">
+        <div class="d-flex align-items-center justify-content-between mb-4 px-2">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-terminal-fill text-primary-cs fs-4 animate__animated animate__pulse animate__infinite"></i>
+                <span class="fw-bold font-monospace text-primary-cs small d-none d-lg-block" style="letter-spacing: 0.05em;">SHELL PROTOCOL</span>
+            </div>
+            <!-- Mobile Toggle -->
+            <button class="btn btn-sm btn-outline-cs d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-expanded="false" aria-controls="sidebarMenu" style="padding: 0.2rem 0.5rem;">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+            <!-- Desktop Toggle -->
+            <button class="btn btn-sm btn-outline-cs d-none d-lg-block border-0 text-muted-cs hover-primary" type="button" id="desktopSidebarToggle" style="padding: 0.2rem 0.5rem; background: transparent;">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+        </div>
+        <div class="collapse d-lg-block w-100" id="sidebarMenu">
+            <div class="d-flex flex-column gap-2">
+        <a href="{{ url_for('dashboard') }}" class="sidebar-link active">
+            <i class="bi bi-grid-1x2"></i> <span>Security Center</span>
+        </a>
+        <a href="{{ url_for('toolkit') }}" class="sidebar-link">
+            <i class="bi bi-tools"></i> <span>Security Toolkit</span>
+        </a>
+        <a href="{{ url_for('articles') }}" class="sidebar-link">
+            <i class="bi bi-shield-shaded"></i> <span>Threat Intel Hub</span>
+        </a>
+        <a href="{{ url_for('quiz') }}" class="sidebar-link">
+            <i class="bi bi-patch-question"></i> <span>Take Assessment</span>
+        </a>
+        <a href="{{ url_for('about') }}" class="sidebar-link">
+            <i class="bi bi-cpu"></i> <span>Tech Stack Specs</span>
+        </a>
+        <a href="{{ url_for('developer') }}" class="sidebar-link">
+            <i class="bi bi-person-badge"></i> <span>Developer Profile</span>
+        </a>
+        
+        <hr class="border-cs my-3">
+        
+        {% if session.get('role') == 'admin' %}
+            <a href="{{ url_for('admin_dashboard') }}" class="sidebar-link text-warning">
+                <i class="bi bi-speedometer2"></i> <span>Admin Panel</span>
+            </a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}" class="sidebar-link text-danger">
+            <i class="bi bi-box-arrow-right"></i> <span>Terminate Session</span>
+        </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Command Center Content -->
+    <main class="dashboard-main bg-cs-primary">
+        <div class="container-fluid" data-aos="fade-up">
+            <!-- Header Banner -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-8">
+                    <h2 class="fw-bold m-0" style="font-family: var(--font-heading);"><i class="bi bi-shield-lock-fill text-primary-cs"></i> Security Command Center</h2>
+                    <p class="text-secondary-cs small mb-0">Monitor real-time link vulnerability metrics, threat distribution ratios, and academic credentials.</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <span class="badge-cs badge-primary border-cs py-2 px-3 rounded-pill fw-bold">
+                        <i class="bi bi-person-fill-check"></i> USER: {{ session.get('username') }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Stats metric row -->
+            <div class="row g-3 mb-4">
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-primary" style="width: 38px; height: 38px; min-width: 38px; font-size: 1.1rem;">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-label">Total URL Audits</div>
+                            <div class="stat-value"><span id="card-total-scans" class="counter-number" data-target="{{ scans_count }}">{{ scans_count }}</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-success" style="width: 38px; height: 38px; min-width: 38px; font-size: 1.1rem;">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-label">Clean (Safe)</div>
+                            <div class="stat-value"><span id="card-safe-scans" class="counter-number" data-target="{{ safe_count }}">{{ safe_count }}</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-warning" style="width: 38px; height: 38px; min-width: 38px; font-size: 1.1rem;">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-label">Suspicious Links</div>
+                            <div class="stat-value"><span id="card-suspicious-scans" class="counter-number" data-target="0">0</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-danger" style="width: 38px; height: 38px; min-width: 38px; font-size: 1.1rem;">
+                            <i class="bi bi-shield-exclamation"></i>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-label">Threats Blocked</div>
+                            <div class="stat-value"><span id="card-phish-scans" class="counter-number" data-target="{{ phish_count }}">{{ phish_count }}</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="width: 38px; height: 38px; min-width: 38px; font-size: 1.1rem; border-radius: var(--radius-sm); display:flex; align-items:center; justify-content:center; background: rgba(0, 200, 255, 0.12); color: var(--color-primary);">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-label">Avg PW Integrity</div>
+                            <div class="stat-value"><span id="card-avg-password-strength" class="counter-number" data-target="0">0</span>%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="width: 38px; height: 38px; min-width: 38px; font-size: 1.1rem; border-radius: var(--radius-sm); display:flex; align-items:center; justify-content:center; background: rgba(0, 255, 157, 0.12); color: var(--color-accent);">
+                            <i class="bi bi-key-fill"></i>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-label">PWs Generated</div>
+                            <div class="stat-value"><span id="card-passwords-generated" class="counter-number" data-target="0">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scanner Full Width Section -->
+            <div class="row g-4 mb-4">
+                <div class="col-12">
+                    <!-- Scanner submit form -->
+                    <div class="glass-card p-4">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-link text-primary-cs"></i> Audit suspicious web target</h5>
+                        <form id="scan-form">
+                            <div class="input-group-cs">
+                                <span class="input-addon">
+                                    <i class="bi bi-terminal-fill text-primary-cs fs-5"></i>
+                                </span>
+                                <input type="text" id="url-input" class="form-control-cs" placeholder="e.g. secure-paypal-verify.com" required>
+                                <button type="submit" id="scan-btn" class="btn-scan px-4 d-flex align-items-center">
+                                    <span id="scan-spinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                                    <span id="scan-btn-text">Audit URL</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Dynamic scanner result dashboard (Populated by Javascript in displayScanResults) -->
+                    <div id="results-container" class="glass-card shadow-lg p-4 d-none w-100" style="margin-top: 0;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics & Small Widgets Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-xl-4 col-md-6">
+                    <!-- Profile Security Score Gauge -->
+                    <div class="glass-card p-4 h-100">
+                        <h5 class="fw-bold mb-1 text-primary-cs font-monospace small"><i class="bi bi-activity"></i> Profile Security Status</h5>
+                        <p class="text-secondary-cs small mb-3">Calculated profile health based on scan log clean ratio and certificate completions.</p>
+                        
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span id="security-score-verdict" class="fw-bold text-muted-cs small">CALCULATING...</span>
+                            <span id="security-score-val" class="h3 fw-bold text-primary-cs mb-0">--%</span>
+                        </div>
+                        <div class="progress" style="height: 8px; border-radius: 4px;">
+                            <div id="security-score-fill" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6">
+                    <!-- Doughnut Ratios Chart -->
+                    <div class="glass-card p-4 h-100" style="min-height: 250px; display: flex; flex-direction: column;">
+                        <h5 class="fw-bold mb-3 text-primary-cs font-monospace small"><i class="bi bi-pie-chart"></i> Scan Verdict Ratios</h5>
+                        <div class="position-relative flex-grow-1" style="min-height: 160px;">
+                            <canvas id="scanChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-6">
+                    <!-- Threat Index Speedometer Gauge -->
+                    <div class="glass-card p-4 h-100" style="min-height: 250px; display: flex; flex-direction: column;">
+                        <h5 class="fw-bold mb-3 text-primary-cs font-monospace small"><i class="bi bi-speedometer"></i> Security Threat Index</h5>
+                        <div class="position-relative flex-grow-1 d-flex justify-content-center align-items-center" style="min-height: 160px;">
+                            <div id="securityGaugeChart" style="width: 100%; min-height: 160px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-md-6">
+                    <!-- Threat Feed -->
+                    <div class="glass-card p-4 h-100">
+                        <h5 class="fw-bold mb-3 text-primary-cs font-monospace small"><i class="bi bi-globe-americas"></i> Global Security Alerts</h5>
+                        <div class="list-group list-group-flush small" style="max-height: 200px; overflow-y: auto;">
+                            <div class="list-group-item bg-transparent border-0 px-0 py-2 border-bottom">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold"><i class="bi bi-exclamation-triangle"></i> ALERT</span>
+                                    <span class="text-muted-cs small">Just now</span>
+                                </div>
+                                <p class="mb-0 text-secondary-cs" style="font-size: 0.8rem;">Credential harvesting campaign spoofing DHL invoice notification discovered.</p>
+                            </div>
+                            <div class="list-group-item bg-transparent border-0 px-0 py-2 border-bottom">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-warning fw-bold"><i class="bi bi-shield-alert"></i> ANOMALY</span>
+                                    <span class="text-muted-cs small">2 hrs ago</span>
+                                </div>
+                                <p class="mb-0 text-secondary-cs" style="font-size: 0.8rem;">Massive spike in redirect chains utilizing web shorteners (.tinyurl / .bitly).</p>
+                            </div>
+                            <div class="list-group-item bg-transparent border-0 px-0 py-2 border-bottom">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> PATCH</span>
+                                    <span class="text-muted-cs small">6 hrs ago</span>
+                                </div>
+                                <p class="mb-0 text-secondary-cs" style="font-size: 0.8rem;">Updated Random Forest feature heuristics parameters to counter subdomain spoof signatures.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-6 col-md-12">
+                    <!-- Quiz Certificates qualification -->
+                    <div class="glass-card p-4 h-100">
+                        <h5 class="fw-bold mb-2 text-primary-cs font-monospace small"><i class="bi bi-award"></i> Verification Credentials</h5>
+                        {% if quiz_results %}
+                            <div class="d-flex flex-wrap gap-2 mt-3">
+                                {% for quiz in quiz_results %}
+                                    <a href="{{ url_for('certificate', code=quiz.certificate_code) }}" target="_blank" class="text-decoration-none">
+                                        <span class="badge bg-transparent border border-success text-success px-3 py-2 rounded-pill shadow-sm">
+                                            <i class="bi bi-patch-check-fill me-1"></i> {{ quiz.quiz_type }} Certified
+                                            <span class="badge-cs badge-primary rounded-pill ms-1"><i class="bi bi-printer"></i> View</span>
+                                        </span>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-cs-dark mt-3 py-2 px-3 border border-secondary rounded-3">
+                                <i class="bi bi-info-circle me-2 text-primary-cs"></i>
+                                <span class="small text-secondary-cs">No security clearances earned. Complete modules in Toolkit.</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Visual Analytics Row -->
+            <div class="row g-4 mb-4" data-aos="fade-up">
+                <div class="col-md-6">
+                    <div class="glass-card p-4 h-100" style="min-height: 300px; display: flex; flex-direction: column;">
+                        <h5 class="fw-bold mb-1 text-primary-cs font-monospace small"><i class="bi bi-grid-3x3-gap-fill"></i> Activity Heatmap</h5>
+                        <p class="text-secondary-cs small mb-3">Event frequency (scans, checks, quizzes) distributed by weekday and time blocks.</p>
+                        <div class="position-relative flex-grow-1" id="activityHeatmap" style="min-height: 200px;"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="glass-card p-4 h-100" style="min-height: 300px; display: flex; flex-direction: column;">
+                        <h5 class="fw-bold mb-1 text-primary-cs font-monospace small"><i class="bi bi-graph-up-arrow"></i> Score Security Trends</h5>
+                        <p class="text-secondary-cs small mb-3">Track progress of URL risk metrics versus password strength integrity curves.</p>
+                        <div class="position-relative flex-grow-1" id="securityTrendsChart" style="min-height: 200px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Threat Audit Ledger Table -->
+            <div class="row g-4 mb-4" data-aos="fade-up">
+                <div class="col-12">
+                    <div class="glass-card p-4">
+                        <h5 class="fw-bold mb-3 text-primary-cs border-bottom border-cs pb-2"><i class="bi bi-clock-history"></i> Personal Threat Audit Ledger</h5>
+                        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+                            <table class="table-cs">
+                                <thead>
+                                    <tr>
+                                        <th>Target URL</th>
+                                        <th>Verdict</th>
+                                        <th>Confidence</th>
+                                        <th>Risk Score</th>
+                                        <th>Audit Timestamp</th>
+                                        <th>Report</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scans-tbody">
+                                    {% for scan in scans %}
+                                        <tr>
+                                            <td class="text-break font-monospace small"><code>{{ scan.url }}</code></td>
+                                            <td>
+                                                <span class="badge-cs {% if scan.prediction == 'Phishing' %}badge-danger{% else %}badge-success{% endif %}">
+                                                    {{ scan.prediction }}
+                                                </span>
+                                            </td>
+                                            <td class="font-monospace small">{{ scan.confidence_score | round(1) }}%</td>
+                                            <td class="font-monospace small">{{ scan.risk_score }}/100</td>
+                                            <td class="text-muted-cs small">{{ scan.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            <td>
+                                                <a href="{{ url_for('download_report', scan_id=scan.id) }}" class="btn btn-sm btn-outline-cs">
+                                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr id="no-scans-row">
+                                            <td colspan="6" class="text-center text-muted-cs py-4">
+                                                <i class="bi bi-folder-x fs-2"></i>
+                                                <p class="mb-0 mt-2">No scans logged. Audit a target link above to initiate the ledger.</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Include Dashboard scan JS -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,22 @@
+flowchart TD
+    Client[Browser Client: HTML5 / Bootstrap 5 / Vanilla JS]
+    
+    subgraph Flask Application Controller
+        Routes[Routing, Session & API Controllers]
+        Auth[Session Auth Manager]
+        Heuristics[Heuristic Feature Extractor]
+        ML[scikit-learn Random Forest Model]
+        PDF[ReportLab PDF Engine]
+    end
+    
+    subgraph Persistence Layer
+        DB[(MySQL / SQLite Database)]
+    end
+    
+    Client <-->|HTTP Post / Ajax JSON| Routes
+    Routes <--> Auth
+    Routes --> Heuristics
+    Heuristics -->|Feature List| ML
+    ML -->|Threat Verification Verdict| Routes
+    Routes --> PDF
+    Routes <-->|SQLAlchemy ORM| DB

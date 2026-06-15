@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}500 - Internal Breach / Server Error | CyberShield AI{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center animate__animated animate__fadeInUp">
+    <div class="row justify-content-center py-5">
+        <div class="col-md-7">
+            <div class="glass-card p-5 border-cs shadow-lg">
+                <div class="stat-icon stat-icon-danger mx-auto mb-4 animate__animated animate__flash animate__infinite animate__slower" style="width: 72px; height: 72px; font-size: 2rem;">
+                    <i class="bi bi-radioactive"></i>
+                </div>
+                <h1 class="display-4 fw-bold font-monospace text-danger mb-2">500</h1>
+                <h3 class="fw-bold mb-3" style="font-family: var(--font-heading);">INTERNAL SYSTEM EXCEPTION</h3>
+                <p class="text-secondary-cs mb-4">
+                    An unexpected exception has breached the system core. The stack trace has been encrypted and saved to the cybersecurity logs for developer analysis.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('home') }}" class="btn-primary-cs rounded-pill px-4 py-2">
+                        <i class="bi bi-house-door-fill"></i> Safe Zone (Home)
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn-outline-cs rounded-pill px-4 py-2">
+                        <i class="bi bi-chat-text-fill"></i> Report Exception
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

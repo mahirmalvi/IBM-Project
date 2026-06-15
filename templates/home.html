@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+
+{% block title %}CyberShield AI | Enterprise Phishing Detection & Mitigation{% endblock %}
+
+{% block content %}
+<!-- 1. Premium Animated Hero Section (Center Aligned, Glowing Wall Theme) -->
+<section class="hero-section-alt">
+    <!-- Ambient glowing backdrop blobs -->
+    <div class="hero-wall-glow-1"></div>
+    <div class="hero-wall-glow-2"></div>
+    <div class="hero-wall-glow-3"></div>
+    <div class="hero-grid-bg-alt"></div>
+
+    <div
+        class="container position-relative d-flex flex-column align-items-center text-center justify-content-center h-100">
+        <!-- Badge -->
+        <div class="hero-badge-alt animate__animated animate__fadeInDown">
+            <span class="badge-dot"></span> Active Defense Protocol Shield
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="hero-title-alt animate__animated animate__fadeInUp">
+            CyberShield AI <br>
+            <span class="highlight">Up to 99.9% Detection</span>
+        </h1>
+
+        <!-- Content widgets in double-grid matching reference image -->
+        <div class="row justify-content-center mt-4 mt-md-5 g-4 w-100 px-2 px-md-0" style="max-width: 960px;">
+            <!-- Left Card: Stats Widget -->
+            <div class="col-md-5" data-aos="fade-right" data-aos-delay="200">
+                <div class="glass-widget-stats h-100 d-flex flex-column justify-content-around">
+                    <div class="d-flex justify-content-between align-items-center w-100 px-3">
+                        <div class="stat-group">
+                            <span class="stat-number">15k+</span>
+                            <span class="stat-label-alt">Threats Isolated</span>
+                        </div>
+                        <div class="stat-divider-vertical"></div>
+                        <div class="stat-group">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label-alt">ML Accuracy</span>
+                        </div>
+                        <div class="stat-divider-vertical"></div>
+                        <div class="stat-group">
+                            <span class="stat-number">0.5s</span>
+                            <span class="stat-label-alt">Resp. Time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Card: Description & Actions Widget -->
+            <div class="col-md-7" data-aos="fade-left" data-aos-delay="200">
+                <div class="glass-widget-info text-start p-4 d-flex flex-column justify-content-between h-100">
+                    <p class="info-text-alt">
+                        We leverage a Random Forest Machine Learning classifier with 100 decision trees to neutralize
+                        phishing links and credential harvesting in real-time.
+                    </p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#quick-scan" class="btn-action-primary">
+                            <i class="bi bi-terminal-fill me-1"></i> Audit URL
+                        </a>
+                        <a href="{{ url_for('quiz') }}" class="btn-action-outline">
+                            <i class="bi bi-patch-question me-1"></i> Security Quiz
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Looping Marquee Ticker Tape -->
+    <div class="hero-ticker-wrap">
+        <div class="hero-ticker">
+            <span class="ticker-item">Random Forest Classifier</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Lexical URL Auditing</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Heuristic Risk Filters</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">99.9% Platform Uptime</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Real-Time Decryption Shield</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Zero Trust Policy</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Credential Harvesting Prevention</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Active Malware Scanner</span>
+            <span class="ticker-dot">•</span>
+            <!-- Second loop copy for seamless translation animation -->
+            <span class="ticker-item">Random Forest Classifier</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Lexical URL Auditing</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Heuristic Risk Filters</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">99.9% Platform Uptime</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Real-Time Decryption Shield</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Zero Trust Policy</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Credential Harvesting Prevention</span>
+            <span class="ticker-dot">•</span>
+            <span class="ticker-item">Active Malware Scanner</span>
+            <span class="ticker-dot">•</span>
+        </div>
+    </div>
+</section>
+
+<!-- Cyber Security Toolkit Showcase Section -->
+<section class="section-padding bg-cs-primary border-bottom border-cs" id="toolkit-showcase">
+    <div class="container" data-aos="fade-up">
+        <div class="text-center mb-5">
+            <div class="badge-cs badge-primary border-cs mb-2 py-1 px-3 rounded-pill fw-bold">
+                <i class="bi bi-tools"></i> UTILITY SUITE
+            </div>
+            <h2 class="section-title">Cyber Security Toolkit Showcase</h2>
+            <p class="section-subtitle">Empower your digital posture with our premium, built-in security auditing
+                utilities.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div
+                    class="glass-card p-4 h-100 border-cs d-flex flex-column justify-content-between text-start toolkit-card">
+                    <div>
+                        <div class="stat-icon stat-icon-primary mb-3">
+                            <i class="bi bi-shield-lock fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Password Analyzer</h5>
+                        <p class="text-secondary-cs small mb-4">
+                            Audit passphrase entropy, check dynamic character pool density, and estimate crack delay
+                            timings against GPU arrays.
+                        </p>
+                    </div>
+                    <a href="{{ url_for('toolkit') }}#password-strength-section"
+                        class="btn btn-outline-cs btn-sm rounded-pill w-100 justify-content-center mt-auto">
+                        Analyze <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div
+                    class="glass-card p-4 h-100 border-cs d-flex flex-column justify-content-between text-start toolkit-card">
+                    <div>
+                        <div class="stat-icon stat-icon-success mb-3">
+                            <i class="bi bi-key-fill fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Password Generator</h5>
+                        <p class="text-secondary-cs small mb-4">
+                            Generate cryptographically secure passwords utilizing configurable character sets to
+                            eliminate credential predictability.
+                        </p>
+                    </div>
+                    <a href="{{ url_for('toolkit') }}#password-generator-section"
+                        class="btn btn-outline-cs btn-sm rounded-pill w-100 justify-content-center mt-auto">
+                        Generate <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div
+                    class="glass-card p-4 h-100 border-cs d-flex flex-column justify-content-between text-start toolkit-card">
+                    <div>
+                        <div class="stat-icon stat-icon-warning mb-3">
+                            <i class="bi bi-link-45deg fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">URL / Phishing Scanner</h5>
+                        <p class="text-secondary-cs small mb-4">
+                            Examine destination anchors, query brand spoofing keywords, scan subdomain arrays, and
+                            retrieve instant safety ratings.
+                        </p>
+                    </div>
+                    <a href="{{ url_for('toolkit') }}#url-scanner-section"
+                        class="btn btn-outline-cs btn-sm rounded-pill w-100 justify-content-center mt-auto">
+                        Scan Link <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div
+                    class="glass-card p-4 h-100 border-cs d-flex flex-column justify-content-between text-start toolkit-card">
+                    <div>
+                        <div class="stat-icon stat-icon-primary mb-3"
+                            style="--color-primary-glow: rgba(6, 182, 212, 0.2); background: linear-gradient(135deg, var(--color-info), var(--bg-tertiary));">
+                            <i class="bi bi-patch-question fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Security Awareness Quiz</h5>
+                        <p class="text-secondary-cs small mb-4">
+                            Evaluate human factors defense. Face simulated phishing tactics and qualify for official
+                            safety certifications.
+                        </p>
+                    </div>
+                    <a href="{{ url_for('quiz') }}"
+                        class="btn btn-outline-cs btn-sm rounded-pill w-100 justify-content-center mt-auto">
+                        Take Quiz <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Animated Stats Counter Section -->
+<section class="py-4 border-top border-bottom bg-cs-secondary" data-aos="fade-up">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-6 col-md-3">
+                <div class="p-2">
+                    <h2 class="fw-bold text-primary-cs mb-1 font-monospace"><span class="counter-number"
+                            data-target="98">0</span>%</h2>
+                    <div class="text-muted-cs small font-monospace">ML Accuracy Rating</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="p-2">
+                    <h2 class="fw-bold text-primary-cs mb-1 font-monospace"><span class="counter-number"
+                            data-target="15000">0</span>+</h2>
+                    <div class="text-muted-cs small font-monospace">Threats Isolated</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="p-2">
+                    <h2 class="fw-bold text-primary-cs mb-1 font-monospace"><span class="counter-number"
+                            data-target="100">0</span>%</h2>
+                    <div class="text-muted-cs small font-monospace">Decryption Secure</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="p-2">
+                    <h2 class="fw-bold text-primary-cs mb-1 font-monospace"><span class="counter-number"
+                            data-target="2">0</span>.5s</h2>
+                    <div class="text-muted-cs small font-monospace">Avg Response Time</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. Console Scanner Container -->
+<section id="quick-scan" class="section-padding bg-cs-primary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Instant URL Security Auditing</h2>
+                    <p class="section-subtitle">Execute a real-time risk assessment parameters review on any suspicious
+                        web target link.</p>
+                </div>
+
+                <!-- Scanner Input Card -->
+                <div class="glass-card p-4 border-cs shadow-lg mb-5">
+                    <form id="scan-form">
+                        <div class="input-group-cs">
+                            <span class="input-addon">
+                                <i class="bi bi-shield-fill-exclamation text-primary-cs fs-4"></i>
+                            </span>
+                            <input type="text" id="url-input" class="form-control-cs"
+                                placeholder="Enter link address (e.g. login.secure-paypal-update.com)" required>
+                            <button type="submit" id="scan-btn" class="btn-scan px-4 d-flex align-items-center">
+                                <span id="scan-spinner" class="spinner-border spinner-border-sm me-2 d-none"
+                                    role="status" aria-hidden="true"></span>
+                                <span id="scan-btn-text">Audit URL</span>
+                            </button>
+                        </div>
+                    </form>
+                    {% if not session.get('user_id') %}
+                    <div class="form-text text-center mt-3 text-muted-cs">
+                        <i class="bi bi-info-circle"></i> Running in guest mode. <a href="{{ url_for('register') }}"
+                            class="text-primary-cs fw-bold">Register / Sign In</a> to access full reporting dashboards
+                        and qualifications.
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- 4. Dynamic Results Grid (Rendered by JS in displayScanResults) -->
+                <div id="results-container" class="glass-card shadow-lg p-4 d-none">
+                    <!-- Javascript replaces this with the Premium Dashboard Layout -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Security Capabilities Section -->
+<section class="section-padding bg-cs-secondary border-top border-cs">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">Engine Specifications & Defense Systems</h2>
+            <p class="section-subtitle">How our AI models isolate fraudulent links from legitimate organizations</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass-card p-4 h-100 border-cs d-flex flex-column align-items-start text-start">
+                    <div class="stat-icon stat-icon-primary mb-3">
+                        <i class="bi bi-binoculars fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-2">Heuristic Scan Rules</h4>
+                    <p class="text-secondary-cs small mb-0">
+                        Analyzes structure indicators: subdomains counts, prefix hyphens, shortened domains, IP
+                        parameters, and brand keywords.
+                    </p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass-card p-4 h-100 border-cs d-flex flex-column align-items-start text-start">
+                    <div class="stat-icon stat-icon-success mb-3">
+                        <i class="bi bi-cpu fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-2">Random Forest Model</h4>
+                    <p class="text-secondary-cs small mb-0">
+                        Combines predictions of 100 decision trees. Trained on curated datasets, yielding over 98%
+                        prediction rate on threats.
+                    </p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="glass-card p-4 h-100 border-cs d-flex flex-column align-items-start text-start">
+                    <div class="stat-icon stat-icon-warning mb-3">
+                        <i class="bi bi-mortarboard fs-4"></i>
+                    </div>
+                    <h4 class="fw-bold mb-2">Vulnerability Quiz</h4>
+                    <p class="text-secondary-cs small mb-0">
+                        Test awareness under mock campaigns, evaluate explanations, record scores, and qualify for
+                        printable Safety Credentials.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include Dashboard scan JS -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

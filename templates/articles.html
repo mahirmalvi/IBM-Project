@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+
+{% block title %}Threat Intelligence & Cybersecurity Hub | CyberShield AI{% endblock %}
+
+{% block content %}
+<!-- Banner -->
+<section class="section-padding bg-cs-secondary border-bottom border-cs position-relative overflow-hidden">
+    <div class="hero-glow hero-glow-1" style="opacity: 0.2;"></div>
+    <div class="container text-center position-relative">
+        <div class="badge-cs badge-primary mb-3">CYBER THREAT REPOSITORY</div>
+        <h1 class="section-title">Threat Intelligence Hub</h1>
+        <p class="section-subtitle mb-0">Deep education modules on social engineering vectors, modern cybersecurity frameworks, and AI threat mitigation.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <!-- Category Filter Tabs -->
+    <div class="d-flex justify-content-center gap-2 mb-5 flex-wrap">
+        <button class="btn btn-outline-cs rounded-pill px-4 active" id="filter-all" onclick="filterArticles('all')">
+            <i class="bi bi-grid-fill"></i> All Intelligence
+        </button>
+        <button class="btn btn-outline-cs rounded-pill px-4" id="filter-beginner" onclick="filterArticles('beginner')">
+            <i class="bi bi-shield-check"></i> Core Awareness (Beginner)
+        </button>
+        <button class="btn btn-outline-cs rounded-pill px-4" id="filter-intermediate" onclick="filterArticles('intermediate')">
+            <i class="bi bi-shield-shaded"></i> System Defense (Intermediate)
+        </button>
+        <button class="btn btn-outline-cs rounded-pill px-4" id="filter-advanced" onclick="filterArticles('advanced')">
+            <i class="bi bi-shield-lock-fill"></i> Cyber Frameworks (Advanced)
+        </button>
+    </div>
+
+    <!-- 9 Articles Grid -->
+    <div class="row g-4" id="articles-grid">
+        
+        <!-- Beginner 1: What is Phishing -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="beginner">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-success position-absolute m-3" style="z-index: 2;">Beginner</span>
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Phishing vectors" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">01. What is Phishing?</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            Phishing is a social engineering technique where attackers impersonate trustworthy entities to deceive victims into handing over credentials, financial details, or executing malware. It forms the entry vector for 90% of data breaches.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>Deceptive Salutation:</strong> Vague greetings like "Valued Customer".</li>
+                            <li><strong>Sense of Urgency:</strong> Threatening immediate suspension.</li>
+                            <li><strong>Mismatched Domain:</strong> Subtle typos in host names.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beginner 2: Password Security Guide -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="beginner">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-success position-absolute m-3" style="z-index: 2;">Beginner</span>
+                    <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=600&q=80" alt="Password security" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">02. Password Security Guide</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            Weak passwords are easy to crack via brute-force or credential stuffing. A resilient password strategy requires high entropy and modern authentication layers to withstand dictionary attacks.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>Length Over Complexity:</strong> Use passphrases (4+ random words).</li>
+                            <li><strong>Multi-Factor Auth:</strong> Enable authenticator apps (TOTP), avoiding SMS.</li>
+                            <li><strong>Credential Vaults:</strong> Implement password managers to generate distinct credentials.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beginner 3: Email Security Awareness -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="beginner">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-success position-absolute m-3" style="z-index: 2;">Beginner</span>
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Email security" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">03. Email Security Awareness</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            SMTP was not designed with security in mind, allowing sender spoofing. Identifying header anomalies and envelope signatures is crucial for preventing malicious inbox entries.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>SPF / DKIM Checks:</strong> Inspect authentication validation records.</li>
+                            <li><strong>Display Name Spoofing:</strong> Double-check the sender's actual email, not just the name.</li>
+                            <li><strong>Attachment Risk:</strong> Never launch macros in incoming documents (.docm, .vbs).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intermediate 4: Types of Phishing Attacks -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="intermediate">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-warning position-absolute m-3" style="z-index: 2;">Intermediate</span>
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" alt="Phishing Types" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">04. Types of Phishing Attacks</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            Phishing has evolved from bulk spam to highly targeted attacks utilizing open-source intelligence (OSINT). Understanding different variants is crucial to stopping targeted intrusions.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>Spear Phishing:</strong> Highly customized campaigns targeting specific individuals.</li>
+                            <li><strong>Whaling:</strong> Spear phishing directed at high-level executives (C-Suite).</li>
+                            <li><strong>Vishing & Smishing:</strong> Attacks carried out via Voice Calls or SMS text alerts.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intermediate 5: Secure Browsing Practices -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="intermediate">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-warning position-absolute m-3" style="z-index: 2;">Intermediate</span>
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80" alt="Secure browsing" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">05. Secure Browsing Practices</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            Browsers are our gateway to the web, exposing users to cross-site scripting (XSS), drive-by downloads, and domain hijackings. Secure client-side settings mitigate these risks.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>HTTPS-Only Mode:</strong> Auto-upgrades HTTP connections to encrypted tunnels.</li>
+                            <li><strong>Secure DNS:</strong> Set up DNS-over-HTTPS (DoH) via Cloudflare or Google.</li>
+                            <li><strong>Active Script Control:</strong> Block automatic popups and unauthorized extensions.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intermediate 6: Real-World Case Studies -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="intermediate">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-warning position-absolute m-3" style="z-index: 2;">Intermediate</span>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Case studies" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">06. Real-World Case Studies</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            Analyzing prominent corporate breaches proves that social engineering overrides technical controls. Here are key historical lessons:
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>Google & Facebook (2013):</strong> A lone actor spoofed hardware vendor invoice emails, stealing $100M.</li>
+                            <li><strong>FACC (2016):</strong> A whaling attack impersonated the CEO requesting an acquisition transfer, costing $54M.</li>
+                            <li><strong>Target Corporation (2013):</strong> Compromised via HVAC contractor phishing credentials, breaching 40M cards.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced 7: AI-Based Phishing Detection Process -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="advanced">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-danger position-absolute m-3" style="z-index: 2;">Advanced</span>
+                    <img src="https://images.unsplash.com/photo-1527474305487-b87b222841cc?auto=format&fit=crop&w=600&q=80" alt="AI detection" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">07. AI Phishing Detection Process</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            Static signature matching fails against dynamic URL generation. CyberShield AI utilizes machine learning to parse lexical tokens and estimate risk values instantly.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>Feature Vectorization:</strong> Extracting length, IP usage, and redirect signatures.</li>
+                            <li><strong>Random Forest Classification:</strong> Processing vectors through 100 decision trees.</li>
+                            <li><strong>Probability Score:</strong> Mapping decision leaf votes to confidence percentage.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced 8: Cyber Kill Chain Overview -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="advanced">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-danger position-absolute m-3" style="z-index: 2;">Advanced</span>
+                    <img src="https://images.unsplash.com/photo-1526374865140-fb30f7973167?auto=format&fit=crop&w=600&q=80" alt="Cyber Kill Chain" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">08. Cyber Kill Chain Overview</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            Developed by Lockheed Martin, this structured framework maps the phases of a cyber attack from initial reconnaissance to goal completion. Disrupting any phase breaks the chain.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>Reconnaissance & Weaponization:</strong> Gathering OSINT and building payloads.</li>
+                            <li><strong>Delivery & Exploitation:</strong> Transmitting payloads (typically via Phishing URLs).</li>
+                            <li><strong>Command & Control:</strong> Establishing remote access for data exfiltration.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced 9: OWASP Top 10 Overview -->
+        <div class="col-md-6 col-lg-4 article-item" data-category="advanced">
+            <div class="glass-card h-100 border-cs overflow-hidden d-flex flex-column">
+                <div class="article-img-container position-relative">
+                    <span class="badge-cs badge-danger position-absolute m-3" style="z-index: 2;">Advanced</span>
+                    <img src="https://images.unsplash.com/photo-1544256718-3bcf237f3974?auto=format&fit=crop&w=600&q=80" alt="OWASP top 10" class="article-card-img">
+                </div>
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">09. OWASP Top 10 Overview</h5>
+                        <p class="text-secondary-cs small mb-3">
+                            The Open Web Application Security Project (OWASP) indexes the top ten most critical web app vulnerabilities, establishing defensive coding practices worldwide.
+                        </p>
+                        <ul class="text-secondary-cs small ps-3 mb-0">
+                            <li><strong>A01: Broken Access Control:</strong> Bypassing authorization tokens.</li>
+                            <li><strong>A03: Injection (SQLi/XSS):</strong> Executing untrusted command strings.</li>
+                            <li><strong>A05: Security Misconfiguration:</strong> Leaving default settings or debug codes open.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Phishing Templates Simulation Section -->
+    <div class="row mt-5">
+        <div class="col">
+            <div class="glass-card p-4 border-cs">
+                <h3 class="fw-bold mb-3"><i class="bi bi-envelope-open text-primary-cs"></i> Blueprints of Common Phishing Email Scams</h3>
+                <p class="text-secondary-cs mb-4">Analyze real-world spoofing email structures and learn how to identify their underlying indicators.</p>
+                
+                <div class="row g-4">
+                    <!-- Template 1 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-cs-tertiary rounded-3 border-cs h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom border-cs pb-2">
+                                <span class="fw-bold text-danger"><i class="bi bi-x-circle-fill"></i> Case 1: Account Lockout Spoof</span>
+                                <span class="badge-cs badge-danger">High Risk</span>
+                            </div>
+                            <div class="font-monospace small mb-3 text-secondary-cs">
+                                <strong>From:</strong> security-alerts@pay-pal-verification.net<br>
+                                <strong>Subject:</strong> URGENT: Access restricted on your card wallet!<br><br>
+                                Dear Customer,<br><br>
+                                We noticed anomalous access signatures on your profile wallet. To restore access, execute validation of identity details in the link below:<br>
+                                <a href="#" onclick="alert('This link is mock phishing simulation!'); return false;">http://paypal-verification-portal.com/update</a><br><br>
+                                PayPal Security Department
+                            </div>
+                            <div class="alert alert-warning border-0 small mb-0 py-2">
+                                <strong>Red Flags:</strong> Spoofed domain sender address (net vs com), insecure HTTP protocol URL, generic customer greeting, high emotional threat pressure.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Template 2 -->
+                    <div class="col-md-6">
+                        <div class="p-3 bg-cs-tertiary rounded-3 border-cs h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom border-cs pb-2">
+                                <span class="fw-bold text-danger"><i class="bi bi-x-circle-fill"></i> Case 2: Corporate SSO Expiring</span>
+                                <span class="badge-cs badge-danger">High Risk</span>
+                            </div>
+                            <div class="font-monospace small mb-3 text-secondary-cs">
+                                <strong>From:</strong> it-sso-portal@corp-domain-portal-security.net<br>
+                                <strong>Subject:</strong> Required: Password Expiry SSO Synchronize<br><br>
+                                Hello Employee,<br><br>
+                                Your corporate single-sign-on (SSO) credential expires in 12 hours. Synch credentials to maintain access to corporate mailboxes:<br>
+                                <a href="#" onclick="alert('This link is mock phishing simulation!'); return false;">https://bit.ly/3yRst5A</a><br><br>
+                                SSO Security Helpdesk
+                            </div>
+                            <div class="alert alert-warning border-0 small mb-0 py-2">
+                                <strong>Red Flags:</strong> Sender domain combination names (domain-portal-security), URL shorteners (bit.ly) obfuscating real destination, immediate temporal restriction pressure.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cybersecurity Learning Resources Section -->
+    <div class="row mt-5" data-aos="fade-up">
+        <div class="col">
+            <div class="glass-card p-4 border-cs">
+                <h3 class="fw-bold mb-3"><i class="bi bi-mortarboard text-primary-cs"></i> Cybersecurity Training Resources</h3>
+                <p class="text-secondary-cs mb-4">Leverage external repositories, standards databases, and labs to expand your knowledge base:</p>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-cs-tertiary rounded-3 border-cs h-100">
+                            <h6 class="fw-bold mb-2"><i class="bi bi-bookmark-star text-primary-cs"></i> Practice Labs</h6>
+                            <p class="text-secondary-cs small mb-0">Learn hands-on threat hunting and penetration testing via PortSwigger Web Security Academy and TryHackMe.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-cs-tertiary rounded-3 border-cs h-100">
+                            <h6 class="fw-bold mb-2"><i class="bi bi-bookmark-star text-primary-cs"></i> Defense Frameworks</h6>
+                            <p class="text-secondary-cs small mb-0">Study national frameworks and methodologies like NIST Cybersecurity Framework, CIS Benchmarks, and ISO 27001.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-cs-tertiary rounded-3 border-cs h-100">
+                            <h6 class="fw-bold mb-2"><i class="bi bi-bookmark-star text-primary-cs"></i> Threat Intelligence</h6>
+                            <p class="text-secondary-cs small mb-0">Track real-world security advisories, vulnerability CVE registries, and campaigns via CISA Alerts and MITRE ATT&CK.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filterArticles(category) {
+        // Remove active class from all filters
+        document.querySelectorAll("[id^='filter-']").forEach(btn => btn.classList.remove("active"));
+        // Add active to selected
+        document.getElementById("filter-" + category).classList.add("active");
+
+        const items = document.querySelectorAll(".article-item");
+        items.forEach(item => {
+            if (category === "all" || item.getAttribute("data-category") === category) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
+</script>
+{% endblock %}

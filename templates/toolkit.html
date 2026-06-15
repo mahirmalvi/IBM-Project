@@ -1,0 +1,437 @@
+{% extends 'base.html' %}
+
+{% block title %}Cyber Security Toolkit | CyberShield AI{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Collapsible SaaS Sidebar -->
+    <aside class="sidebar-cs sidebar-collapsed">
+        <div class="d-flex align-items-center justify-content-between mb-4 px-2">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-terminal-fill text-primary-cs fs-4 animate__animated animate__pulse animate__infinite"></i>
+                <span class="fw-bold font-monospace text-primary-cs small d-none d-lg-block" style="letter-spacing: 0.05em;">SHELL PROTOCOL</span>
+            </div>
+            <!-- Mobile Toggle -->
+            <button class="btn btn-sm btn-outline-cs d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-expanded="false" aria-controls="sidebarMenu" style="padding: 0.2rem 0.5rem;">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+            <!-- Desktop Toggle -->
+            <button class="btn btn-sm btn-outline-cs d-none d-lg-block border-0 text-muted-cs hover-primary" type="button" id="desktopSidebarToggle" style="padding: 0.2rem 0.5rem; background: transparent;">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+        </div>
+        <div class="collapse d-lg-block w-100" id="sidebarMenu">
+            <div class="d-flex flex-column gap-2">
+        <a href="{{ url_for('dashboard') }}" class="sidebar-link">
+            <i class="bi bi-grid-1x2"></i> <span>Security Center</span>
+        </a>
+        <a href="{{ url_for('toolkit') }}" class="sidebar-link active">
+            <i class="bi bi-tools"></i> <span>Security Toolkit</span>
+        </a>
+        <a href="{{ url_for('articles') }}" class="sidebar-link">
+            <i class="bi bi-shield-shaded"></i> <span>Threat Intel Hub</span>
+        </a>
+        <a href="{{ url_for('quiz') }}" class="sidebar-link">
+            <i class="bi bi-patch-question"></i> <span>Take Assessment</span>
+        </a>
+        <a href="{{ url_for('about') }}" class="sidebar-link">
+            <i class="bi bi-cpu"></i> <span>Tech Stack Specs</span>
+        </a>
+        <a href="{{ url_for('developer') }}" class="sidebar-link">
+            <i class="bi bi-person-badge"></i> <span>Developer Profile</span>
+        </a>
+        
+        <hr class="border-cs my-3">
+        
+        {% if session.get('role') == 'admin' %}
+            <a href="{{ url_for('admin_dashboard') }}" class="sidebar-link text-warning">
+                <i class="bi bi-speedometer2"></i> <span>Admin Panel</span>
+            </a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}" class="sidebar-link text-danger">
+            <i class="bi bi-box-arrow-right"></i> <span>Terminate Session</span>
+        </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <main class="dashboard-main bg-cs-primary">
+        <div class="container-fluid" data-aos="fade-up">
+            
+            <!-- Header section -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-8">
+                    <h2 class="fw-bold m-0" style="font-family: var(--font-heading);">
+                        <i class="bi bi-tools text-primary-cs animate__animated animate__swing animate__infinite animate__slower d-inline-block"></i> Cyber Security Toolkit
+                    </h2>
+                    <p class="text-secondary-cs small mb-0">Assess digital asset integrity, run interactive target audits, and generate entropy-secured credentials.</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <span class="badge-cs badge-primary border-cs py-2 px-3 rounded-pill fw-bold">
+                        <i class="bi bi-shield-lock-fill"></i> SHIELD MODE: ACTIVE
+                    </span>
+                </div>
+            </div>
+
+            <!-- Toolkit Module Grids -->
+            <div class="row g-4 mb-4">
+                
+                <!-- 1. Password Strength Analyzer Card -->
+                <div class="col-lg-6" id="password-strength-section">
+                    <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-cs pb-2">
+                                <h5 class="fw-bold m-0 text-primary-cs"><i class="bi bi-shield-lock"></i> Password Strength Analyzer</h5>
+                                <span id="pw-rating-label" class="badge-cs badge-danger px-2 py-0.5 small fw-bold">Very Weak</span>
+                            </div>
+                            
+                            <p class="text-secondary-cs small mb-3">Type your password below to run a real-time heuristics audit covering length, entropy, repetition, and standard dictionary checks.</p>
+                            
+                            <div class="input-group-cs mb-3">
+                                <span class="input-addon"><i class="bi bi-key-fill text-primary-cs"></i></span>
+                                <input type="password" id="pw-analyzer-input" class="form-control-cs" placeholder="Type password here...">
+                                <button type="button" id="pw-toggle-visible" class="input-addon text-primary-cs" style="border-left: 1.5px solid var(--border-color); cursor: pointer;">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Animated Score Progress Meter -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="small font-monospace text-muted-cs">Integrity Score:</span>
+                                    <span id="pw-score-val" class="small font-monospace fw-bold text-primary-cs">0/100</span>
+                                </div>
+                                <div class="progress" style="height: 10px; border-radius: 5px; background: var(--bg-tertiary);">
+                                    <div id="pw-meter-fill" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Stats & Estimations -->
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <div class="p-2 bg-cs-tertiary border-cs rounded-3 text-center">
+                                        <div class="stat-label text-truncate" style="font-size: 0.6rem;">Crack Time (GPU)</div>
+                                        <div id="pw-crack-time" class="fw-bold text-secondary-cs small font-monospace">--</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-2 bg-cs-tertiary border-cs rounded-3 text-center">
+                                        <div class="stat-label text-truncate" style="font-size: 0.6rem;">Entropy Metric</div>
+                                        <div id="pw-entropy-val" class="fw-bold text-secondary-cs small font-monospace">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Complexity Checklist -->
+                            <div class="row g-2 mb-3 border-top border-cs pt-3">
+                                <div class="col-6">
+                                    <div id="req-length" class="small font-monospace text-muted-cs d-flex align-items-center gap-1">
+                                        <i class="bi bi-circle"></i> Length &ge; 12 chars
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div id="req-upper" class="small font-monospace text-muted-cs d-flex align-items-center gap-1">
+                                        <i class="bi bi-circle"></i> Uppercase letter
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div id="req-lower" class="small font-monospace text-muted-cs d-flex align-items-center gap-1">
+                                        <i class="bi bi-circle"></i> Lowercase letter
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div id="req-digit" class="small font-monospace text-muted-cs d-flex align-items-center gap-1">
+                                        <i class="bi bi-circle"></i> Number (0-9)
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div id="req-special" class="small font-monospace text-muted-cs d-flex align-items-center gap-1">
+                                        <i class="bi bi-circle"></i> Special character
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div id="req-unique" class="small font-monospace text-muted-cs d-flex align-items-center gap-1">
+                                        <i class="bi bi-circle"></i> No common patterns
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Improvement Suggestions -->
+                            <div class="mb-3">
+                                <div class="small font-monospace text-muted-cs mb-1">Suggestions:</div>
+                                <ul id="pw-feedback-list" class="list-unstyled ps-1 mb-0" style="min-height: 48px;">
+                                    <li class="text-secondary-cs small"><i class="bi bi-info-circle"></i> Enter password to see suggestions.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 text-end">
+                            <button type="button" id="pw-log-check-btn" class="btn btn-primary-cs btn-sm rounded-pill w-100" disabled>
+                                <i class="bi bi-journal-check"></i> Log Assessment in Ledger
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Secure Password Generator Card -->
+                <div class="col-lg-6" id="password-generator-section">
+                    <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-cs pb-2">
+                                <h5 class="fw-bold m-0 text-primary-cs"><i class="bi bi-gear-fill"></i> Secure Password Generator</h5>
+                                <span id="gen-rating-val" class="badge-cs badge-success px-2 py-0.5 small fw-bold">Very Strong</span>
+                            </div>
+                            
+                            <p class="text-secondary-cs small mb-3">Dynamically generate cryptographic passwords with custom complexity pools. View real-time entropy ratings.</p>
+                            
+                            <!-- Output Block -->
+                            <div class="input-group-cs mb-3">
+                                <span class="input-addon"><i class="bi bi-cpu text-primary-cs"></i></span>
+                                <input type="text" id="gen-output-field" class="form-control-cs font-monospace text-center text-primary fw-bold" readonly placeholder="Generating password...">
+                                <button type="button" id="gen-copy-btn" class="input-addon text-primary-cs" style="border-left: 1.5px solid var(--border-color); cursor: pointer;" title="Copy to Clipboard">
+                                    <i class="bi bi-copy"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Length slider -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between font-monospace small text-muted-cs mb-1">
+                                    <span>Password Length:</span>
+                                    <span class="fw-bold text-primary-cs"><span id="gen-length-val">16</span> characters</span>
+                                </div>
+                                <input type="range" id="gen-length" class="form-range" min="8" max="64" value="16" style="accent-color: var(--color-primary);">
+                            </div>
+                            
+                            <!-- Checkboxes -->
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gen-upper" checked>
+                                        <label class="form-check-label small text-secondary-cs" for="gen-upper">Uppercase (A-Z)</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gen-lower" checked>
+                                        <label class="form-check-label small text-secondary-cs" for="gen-lower">Lowercase (a-z)</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gen-digits" checked>
+                                        <label class="form-check-label small text-secondary-cs" for="gen-digits">Numbers (0-9)</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gen-special" checked>
+                                        <label class="form-check-label small text-secondary-cs" for="gen-special">Symbols (!@#$)</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Stats display -->
+                            <div class="row g-2 mb-3 border-top border-cs pt-3">
+                                <div class="col-6">
+                                    <div class="p-2 bg-cs-tertiary border-cs rounded-3 text-center">
+                                        <div class="stat-label text-truncate" style="font-size: 0.6rem;">Entropy Score</div>
+                                        <div id="gen-entropy-val" class="fw-bold text-secondary-cs small font-monospace">--</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-2 bg-cs-tertiary border-cs rounded-3 text-center">
+                                        <div class="stat-label text-truncate" style="font-size: 0.6rem;">Crack Delay (Offline)</div>
+                                        <div id="gen-crack-val" class="fw-bold text-secondary-cs small font-monospace">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Entropy graph visualization -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="small font-monospace text-muted-cs">Entropy Strength Threshold (128-bit scale):</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div id="gen-entropy-gauge" class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 text-end">
+                            <button type="button" id="generate-btn" class="btn btn-accent-cs btn-sm w-100 justify-content-center">
+                                <i class="bi bi-arrow-clockwise"></i> Generate Secured Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- URL Scanner Component (Visual Dashboard View) -->
+            <div class="row mb-4" id="url-scanner-section">
+                <div class="col-12">
+                    <div class="glass-card p-4">
+                        <div class="border-bottom border-cs pb-2 mb-3">
+                            <h5 class="fw-bold m-0 text-primary-cs"><i class="bi bi-link-45deg"></i> Advanced AI URL Vulnerability Scanner</h5>
+                            <p class="text-secondary-cs small mb-0">Intercept links, perform lexical structure checking, query shortening lists, and display domain reputation metrics instantly.</p>
+                        </div>
+                        
+                        <form id="toolkit-scan-form" class="mb-4">
+                            <div class="input-group-cs">
+                                <span class="input-addon"><i class="bi bi-globe2 text-primary-cs"></i></span>
+                                <input type="text" id="toolkit-url-input" class="form-control-cs" placeholder="e.g. login.verification-security-paypal.com/signin" required>
+                                <button type="submit" id="toolkit-scan-btn" class="btn-scan px-4 d-flex align-items-center">
+                                    <span id="toolkit-scan-spinner" class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
+                                    <span id="toolkit-scan-btn-text">Scan Destination</span>
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- URL scan visual result container -->
+                        <div id="toolkit-results-container" class="border border-cs p-4 rounded-3 d-none animate__animated animate__fadeIn">
+                            <!-- Populated dynamically by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Recent Scan History & Security Tips accordions -->
+            <div class="row g-4">
+                
+                <!-- 3. Recent URL Scan History Table -->
+                <div class="col-lg-7">
+                    <div class="glass-card p-4 h-100">
+                        <h5 class="fw-bold mb-3 text-primary-cs border-bottom border-cs pb-2"><i class="bi bi-clock-history"></i> Recent Vulnerability Checks Ledger</h5>
+                        <div class="table-responsive" style="max-height: 380px; overflow-y: auto;">
+                            <table class="table-cs">
+                                <thead>
+                                    <tr>
+                                        <th>Target URL</th>
+                                        <th>Verdict</th>
+                                        <th>Confidence</th>
+                                        <th>Risk Score</th>
+                                        <th>Audit Timestamp</th>
+                                        <th>Report</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="toolkit-scans-tbody">
+                                    {% for scan in scans %}
+                                        <tr>
+                                            <td class="text-break font-monospace small"><code>{{ scan.url }}</code></td>
+                                            <td>
+                                                <span class="badge-cs {% if scan.prediction == 'Phishing' %}badge-danger{% else %}badge-success{% endif %}">
+                                                    {{ scan.prediction }}
+                                                </span>
+                                            </td>
+                                            <td class="font-monospace small">{{ scan.confidence_score | round(1) }}%</td>
+                                            <td class="font-monospace small">{{ scan.risk_score }}/100</td>
+                                            <td class="text-muted-cs small">{{ scan.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            <td>
+                                                <a href="{{ url_for('download_report', scan_id=scan.id) }}" class="btn btn-sm btn-outline-cs">
+                                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr id="toolkit-no-scans-row">
+                                            <td colspan="6" class="text-center text-muted-cs py-4">
+                                                <i class="bi bi-folder-x fs-2"></i>
+                                                <p class="mb-0 mt-2">No targets scanned during this session. Check a target link above to initiate the ledger.</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Interactive Security Tips Hub -->
+                <div class="col-lg-5">
+                    <div class="glass-card p-4 h-100">
+                        <h5 class="fw-bold mb-3 text-primary-cs border-bottom border-cs pb-2"><i class="bi bi-shield-shaded"></i> Cyber Security Tips Hub</h5>
+                        
+                        <div class="accordion accordion-flush" id="securityTipsAccordion" style="--bs-accordion-bg: transparent; --bs-accordion-color: var(--text-primary);">
+                            
+                            <div class="accordion-item bg-transparent border-cs">
+                                <h2 class="accordion-header" id="tip-headingOne">
+                                    <button class="accordion-button collapsed px-1 py-3 text-secondary-cs fw-semibold bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#tip-collapseOne" aria-expanded="false" aria-controls="tip-collapseOne">
+                                        <i class="bi bi-link-45deg text-primary-cs me-2 fs-5"></i> 1. Analyzing Deceptive Domain Schemes
+                                    </button>
+                                </h2>
+                                <div id="tip-collapseOne" class="accordion-collapse collapse" aria-labelledby="tip-headingOne" data-bs-parent="#securityTipsAccordion">
+                                    <div class="accordion-body px-1 text-muted-cs small">
+                                        Always examine the domain host (e.g., in <code>security-check.paypal.com</code> the main domain is <code>paypal.com</code>, but in <code>paypal-secure.alerts-login.com</code> it is <code>alerts-login.com</code>). Attackers use hyphens, numbers, and multiple subdomains to spoof official branding.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item bg-transparent border-cs">
+                                <h2 class="accordion-header" id="tip-headingTwo">
+                                    <button class="accordion-button collapsed px-1 py-3 text-secondary-cs fw-semibold bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#tip-collapseTwo" aria-expanded="false" aria-controls="tip-collapseTwo">
+                                        <i class="bi bi-safe-fill text-primary-cs me-2 fs-5"></i> 2. Passphrase Complexity vs Length
+                                    </button>
+                                </h2>
+                                <div id="tip-collapseTwo" class="accordion-collapse collapse" aria-labelledby="tip-headingTwo" data-bs-parent="#securityTipsAccordion">
+                                    <div class="accordion-body px-1 text-muted-cs small">
+                                        Offline GPU cracking rigs crack short complex passwords in hours, but long passphrases (e.g., 4 or more random words like <code>correct-horse-battery-staple</code>) are significantly harder. Prioritize length over arbitrary special character substitution.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-transparent border-cs">
+                                <h2 class="accordion-header" id="tip-headingThree">
+                                    <button class="accordion-button collapsed px-1 py-3 text-secondary-cs fw-semibold bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#tip-collapseThree" aria-expanded="false" aria-controls="tip-collapseThree">
+                                        <i class="bi bi-shield-lock-fill text-primary-cs me-2 fs-5"></i> 3. Enabling Multi-Factor Authentication (MFA)
+                                    </button>
+                                </h2>
+                                <div id="tip-collapseThree" class="accordion-collapse collapse" aria-labelledby="tip-headingThree" data-bs-parent="#securityTipsAccordion">
+                                    <div class="accordion-body px-1 text-muted-cs small">
+                                        Even if a phishing attack compromises your password, having Multi-Factor Authentication (using apps like Google Authenticator or hardware keys like Yubikey) blocks attackers because they cannot replicate the dynamic code in real-time.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-transparent border-cs">
+                                <h2 class="accordion-header" id="tip-headingFour">
+                                    <button class="accordion-button collapsed px-1 py-3 text-secondary-cs fw-semibold bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#tip-collapseFour" aria-expanded="false" aria-controls="tip-collapseFour">
+                                        <i class="bi bi-arrows-expand text-primary-cs me-2 fs-5"></i> 4. Auditing URL Shortening Redirection
+                                    </button>
+                                </h2>
+                                <div id="tip-collapseFour" class="accordion-collapse collapse" aria-labelledby="tip-headingFour" data-bs-parent="#securityTipsAccordion">
+                                    <div class="accordion-body px-1 text-muted-cs small">
+                                        URL shortening services (like bit.ly, tinyurl) mask the true destination. Scammers use them to sneak past firewall algorithms. Always run unknown shortened URLs through an online link expander or scanner before clicking.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item bg-transparent border-cs">
+                                <h2 class="accordion-header" id="tip-headingFive">
+                                    <button class="accordion-button collapsed px-1 py-3 text-secondary-cs fw-semibold bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#tip-collapseFive" aria-expanded="false" aria-controls="tip-collapseFive">
+                                        <i class="bi bi-archive-fill text-primary-cs me-2 fs-5"></i> 5. Use Dedicated Password Vaults
+                                    </button>
+                                </h2>
+                                <div id="tip-collapseFive" class="accordion-collapse collapse" aria-labelledby="tip-headingFive" data-bs-parent="#securityTipsAccordion">
+                                    <div class="accordion-body px-1 text-muted-cs small">
+                                        Never reuse passwords across accounts. If one service suffers a data breach, attackers will attempt credential stuffing across other websites. Use a verified local or encrypted cloud password manager (e.g. Bitwarden, Keepass) to store unique credentials.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include ApexCharts -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<!-- Include toolkit page script -->
+<script src="{{ url_for('static', filename='js/toolkit.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,39 @@
+erDiagram
+    USERS {
+        int id PK
+        string username UNIQUE
+        string email UNIQUE
+        string password_hash
+        string role
+        timestamp created_at
+    }
+    SCAN_HISTORY {
+        int id PK
+        int user_id FK
+        string url
+        string prediction
+        double confidence_score
+        int risk_score
+        string features
+        timestamp created_at
+    }
+    QUIZ_RESULTS {
+        int id PK
+        int user_id FK
+        int score
+        int total_questions
+        timestamp completed_at
+        string certificate_code UNIQUE
+    }
+    ADMIN_LOGS {
+        int id PK
+        int admin_id FK
+        string action
+        int target_user_id
+        string ip_address
+        timestamp created_at
+    }
+    
+    USERS ||--o{ SCAN_HISTORY : "performs"
+    USERS ||--o{ QUIZ_RESULTS : "completes"
+    USERS ||--o{ ADMIN_LOGS : "writes"

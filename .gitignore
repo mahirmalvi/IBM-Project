@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+env/
+
+# Database
+*.db
+phishing_detector.db
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# Uploads
+uploads/
+static/uploads/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment Variables
+.env
+
+# Build Files
+build/
+dist/

@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Command Console | CyberShield AI{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Collapsible SaaS Sidebar with Admin Profile -->
+    <aside class="sidebar-cs sidebar-collapsed">
+        <div class="d-flex align-items-center justify-content-between mb-4 px-2">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-shield-lock-fill text-warning fs-4 animate__animated animate__pulse animate__infinite"></i>
+                <span class="fw-bold font-monospace text-warning small d-none d-lg-block" style="letter-spacing: 0.05em;">ADMIN ROOT</span>
+            </div>
+            <!-- Mobile Toggle -->
+            <button class="btn btn-sm btn-outline-cs d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-expanded="false" aria-controls="sidebarMenu" style="padding: 0.2rem 0.5rem;">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+            <!-- Desktop Toggle -->
+            <button class="btn btn-sm btn-outline-cs d-none d-lg-block border-0 text-muted-cs hover-primary" type="button" id="desktopSidebarToggle" style="padding: 0.2rem 0.5rem; background: transparent;">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+        </div>
+        <div class="collapse d-lg-block w-100" id="sidebarMenu">
+            <div class="d-flex flex-column gap-2">
+        <a href="{{ url_for('admin_dashboard') }}" class="sidebar-link active text-warning">
+            <i class="bi bi-speedometer2"></i> <span>Admin Panel</span>
+        </a>
+        <a href="{{ url_for('dashboard') }}" class="sidebar-link">
+            <i class="bi bi-grid-1x2"></i> <span>Security Center</span>
+        </a>
+        <a href="{{ url_for('toolkit') }}" class="sidebar-link">
+            <i class="bi bi-tools"></i> <span>Security Toolkit</span>
+        </a>
+        <a href="{{ url_for('articles') }}" class="sidebar-link">
+            <i class="bi bi-shield-shaded"></i> <span>Threat Intel Hub</span>
+        </a>
+        <a href="{{ url_for('quiz') }}" class="sidebar-link">
+            <i class="bi bi-patch-question"></i> <span>Take Assessment</span>
+        </a>
+        <a href="{{ url_for('about') }}" class="sidebar-link">
+            <i class="bi bi-cpu"></i> <span>Tech Stack Specs</span>
+        </a>
+        <a href="{{ url_for('developer') }}" class="sidebar-link">
+            <i class="bi bi-person-badge"></i> <span>Developer Profile</span>
+        </a>
+        
+        <hr class="border-cs my-3">
+        
+        <a href="{{ url_for('logout') }}" class="sidebar-link text-danger">
+            <i class="bi bi-box-arrow-right"></i> <span>Terminate Session</span>
+        </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Admin Content Area -->
+    <main class="dashboard-main bg-cs-primary">
+        <div class="container-fluid" data-aos="fade-up">
+            <!-- Header -->
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-8">
+                    <div class="badge-cs badge-danger border-cs px-3 py-2 rounded-pill mb-2 fw-bold font-monospace">
+                        <i class="bi bi-shield-lock-fill"></i> ADMINISTRATIVE PRIVILEGES ACTIVE
+                    </div>
+                    <h2 class="fw-bold m-0" style="font-family: var(--font-heading);">System Administration Panel</h2>
+                    <p class="text-secondary-cs small mb-0">Oversee registered users, system-wide threat parameters, and ML model auditing logs.</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <span class="badge-cs badge-primary border-cs py-2 px-3 rounded-pill fw-bold">
+                        <i class="bi bi-person-fill-check"></i> ROOT: {{ session.get('username') }}
+                    </span>
+                </div>
+            </div>
+            
+            <!-- 1. System Statistics Counters -->
+            <div class="row g-3 mb-4 text-center">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-primary"><i class="bi bi-people-fill"></i></div>
+                        <div>
+                            <div class="stat-label">TOTAL USERS</div>
+                            <div class="stat-value">{{ total_users }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-primary"><i class="bi bi-globe"></i></div>
+                        <div>
+                            <div class="stat-label">SYSTEM SCANS</div>
+                            <div class="stat-value">{{ total_scans }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-success"><i class="bi bi-shield-check"></i></div>
+                        <div>
+                            <div class="stat-label">SAFE TARGETS</div>
+                            <div class="stat-value">{{ total_safe }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-icon-danger"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                        <div>
+                            <div class="stat-label">PHISH BLOCKED</div>
+                            <div class="stat-value">{{ total_phish }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2. System Controls Grid -->
+            <div class="row g-4 mb-4">
+                <!-- User Directory -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-4 border-cs h-100">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-person-gear text-primary-cs"></i> Registered Users Directory</h5>
+                        <div class="table-responsive" style="max-height: 350px;">
+                            <table class="table-cs">
+                                <thead class="sticky-top">
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for u in users_list %}
+                                        <tr>
+                                            <td><strong>{{ u.username }}</strong></td>
+                                            <td class="small text-muted-cs">{{ u.email }}</td>
+                                            <td>
+                                                <span class="badge-cs {% if u.role == 'admin' %}badge-danger{% else %}badge-primary{% endif %}">
+                                                    {{ u.role }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {% if u.id == session.get('user_id') %}
+                                                    <span class="text-muted-cs small font-monospace">Active Session</span>
+                                                {% else %}
+                                                    <form action="{{ url_for('admin_delete_user', user_id=u.id) }}" method="POST" onsubmit="return confirm('Are you absolutely sure you want to delete user {{ u.username }}? All their scans and quiz logs will be purged permanently.');">
+                                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                            <i class="bi bi-trash"></i> Delete
+                                                        </button>
+                                                    </form>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- System Action Logs -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-4 border-cs h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <h5 class="fw-bold mb-2"><i class="bi bi-activity text-primary-cs"></i> Administrative Actions Log</h5>
+                            <p class="text-secondary-cs small mb-3">Audit history of critical administrative operations on CyberShield AI.</p>
+                            
+                            <div class="table-responsive mb-3" style="max-height: 230px;">
+                                <table class="table-cs table-sm">
+                                    <thead class="sticky-top">
+                                        <tr>
+                                            <th>Action Done</th>
+                                            <th>Origin IP</th>
+                                            <th>Timestamp</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for log in admin_logs %}
+                                            <tr>
+                                                <td><code>{{ log.action }}</code></td>
+                                                <td class="small">{{ log.ip_address }}</td>
+                                                <td class="small text-muted-cs">{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="3" class="text-center text-muted-cs">No audit logs written.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Export Controls -->
+                        <div class="border-top border-cs pt-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                            <span class="small text-muted-cs font-monospace" style="font-size: 0.75rem;">Data Reporting Center</span>
+                            <a href="{{ url_for('admin_export_scans') }}" class="btn-primary-cs btn-sm rounded-pill">
+                                <i class="bi bi-cloud-arrow-down-fill"></i> Export All Scan Data (CSV)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3. System-Wide Scans Ledger -->
+            <div class="row">
+                <div class="col">
+                    <div class="glass-card p-4 border-cs">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                            <h5 class="fw-bold mb-0"><i class="bi bi-file-earmark-spreadsheet text-primary-cs"></i> Master URL Scans Ledger</h5>
+                            <span class="badge-cs badge-primary font-monospace">Total: {{ scan_history|length }} entries logged</span>
+                        </div>
+                        <div class="table-responsive" style="max-height: 400px;">
+                            <table class="table-cs">
+                                <thead class="sticky-top">
+                                    <tr>
+                                        <th>URL Address</th>
+                                        <th>Verdict</th>
+                                        <th>Confidence</th>
+                                        <th>Risk Score</th>
+                                        <th>Date/Time Checked</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for s in scan_history %}
+                                        <tr>
+                                            <td class="text-break small"><code>{{ s.url }}</code></td>
+                                            <td>
+                                                <span class="badge-cs {% if s.prediction == 'Phishing' %}badge-danger{% else %}badge-success{% endif %}">
+                                                    {{ s.prediction }}
+                                                </span>
+                                            </td>
+                                            <td>{{ s.confidence_score|round(1) }}%</td>
+                                            <td>{{ s.risk_score }}/100</td>
+                                            <td class="small text-muted-cs">{{ s.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            <td>
+                                                <a href="{{ url_for('download_report', scan_id=s.id) }}" class="btn btn-sm btn-outline-cs">
+                                                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="6" class="text-center text-muted-cs py-4">No scan ledger records.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

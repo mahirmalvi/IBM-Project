@@ -1,0 +1,40 @@
+graph LR
+    User[User / Visitor]
+    Admin[System Administrator]
+    
+    subgraph DFD Level 1: Core System Processes
+        Process1[1.0 Session Auth]
+        Process2[2.0 URL Scan Processor]
+        Process3[3.0 Quiz Engine]
+        Process4[4.0 PDF Report Generator]
+        Process5[5.0 Admin Control Board]
+    end
+    
+    subgraph Data Stores
+        DB_Users[(Users Table)]
+        DB_Scans[(Scan History Table)]
+        DB_Quizzes[(Quiz Results Table)]
+        DB_Logs[(Admin Logs Table)]
+    end
+    
+    %% Inputs/Outputs
+    User -->|Enter Credentials| Process1
+    Process1 <-->|Verify / Write User| DB_Users
+    
+    User -->|Submit URL Link| Process2
+    Process2 -->|Extract Features & Run ML| Process2
+    Process2 <-->|Fetch / Record Scan| DB_Scans
+    
+    User -->|Submit MCQ Answers| Process3
+    Process3 <-->|Record Score & Certificate| DB_Quizzes
+    Process3 -->|Trigger Certificate| Process4
+    
+    User -->|Click Download PDF| Process4
+    Process4 <-->|Read Scan Details| DB_Scans
+    Process4 -->|Output PDF Stream| User
+    
+    Admin -->|Login Credentials| Process1
+    Admin -->|Request Delete User| Process5
+    Process5 <-->|Delete Records| DB_Users
+    Process5 <-->|Fetch Logs| DB_Scans
+    Process5 <-->|Write Audit Actions| DB_Logs

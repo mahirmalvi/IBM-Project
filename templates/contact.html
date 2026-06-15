@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Support | CyberShield AI{% endblock %}
+
+{% block content %}
+<div class="container py-5 animate__animated animate__fadeIn">
+    <div class="row g-4 justify-content-center" data-aos="fade-left">
+        <!-- Contact Cards -->
+        <div class="col-lg-4">
+            <div class="glass-card p-4 border-cs mb-3 text-center">
+                <div class="stat-icon stat-icon-primary mx-auto mb-3">
+                    <i class="bi bi-geo-alt fs-4"></i>
+                </div>
+                <h5 class="fw-bold">Academic Institution</h5>
+                <p class="text-secondary-cs small mb-0">Department of Information Technology</p>
+                <p class="text-secondary-cs small">Silver Oak University Capstone Lab</p>
+            </div>
+
+            <div class="glass-card p-4 border-cs text-center">
+                <div class="stat-icon stat-icon-success mx-auto mb-3">
+                    <i class="bi bi-envelope-check fs-4"></i>
+                </div>
+                <h5 class="fw-bold">Support Email</h5>
+                <p class="text-secondary-cs small mb-0">developer@silveroak.edu</p>
+                <p class="text-secondary-cs small">Typical response timeframe: 24 hrs</p>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-lg-6">
+            <div class="glass-card p-4 border-cs">
+                <h3 class="fw-bold mb-2">Send us a Message</h3>
+                <p class="text-secondary-cs small mb-4">Have questions about the machine learning classifier, feedback,
+                    or report logs? Fill out the form below.</p>
+
+                <form action="{{ url_for('contact') }}" method="POST" class="needs-validation" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="contact_name" class="form-label font-monospace small text-secondary-cs">Full
+                                Name</label>
+                            <input type="text" name="name" id="contact_name" class="form-control-cs"
+                                placeholder="e.g. John Doe" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="contact_email" class="form-label font-monospace small text-secondary-cs">Email
+                                Address</label>
+                            <input type="email" name="email" id="contact_email" class="form-control-cs"
+                                placeholder="name@company.com" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="contact_subject"
+                                class="form-label font-monospace small text-secondary-cs">Subject</label>
+                            <input type="text" name="subject" id="contact_subject" class="form-control-cs"
+                                placeholder="ML Classifier feedback..." required>
+                        </div>
+                        <div class="col-12">
+                            <label for="contact_message"
+                                class="form-label font-monospace small text-secondary-cs">Message Content</label>
+                            <textarea name="message" id="contact_message" rows="4" class="form-control-cs"
+                                placeholder="Write your message here..." required></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn-primary-cs w-100 justify-content-center py-3 mt-2">
+                                Send Message <i class="bi bi-send-fill ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

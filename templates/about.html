@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+
+{% block title %}System Architecture & Specifications | CyberShield AI{% endblock %}
+
+{% block content %}
+<section class="section-padding bg-cs-secondary border-bottom border-cs position-relative overflow-hidden">
+    <div class="hero-glow hero-glow-1" style="opacity: 0.15;"></div>
+    <div class="container text-center position-relative">
+        <div class="badge-cs badge-primary mb-3">SYSTEM PROTOCOLS</div>
+        <h1 class="section-title">Architectural & Machine Learning Specifications</h1>
+        <p class="section-subtitle mb-0">Detailed overview of system components, database schemas, and structured UML flowcharts.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <!-- 1. Technical Stack Overview -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-6" data-aos="fade-right">
+            <div class="glass-card p-4 border-cs h-100">
+                <h4 class="fw-bold mb-3"><i class="bi bi-gear-fill text-primary-cs"></i> Application Core Stack</h4>
+                <p class="text-secondary-cs small">This platform is engineered as a decoupled secure enterprise SaaS system, featuring distinct functional layers:</p>
+                <ul class="text-secondary-cs small ps-3">
+                    <li class="mb-2"><strong>Presentation Layer:</strong> HTML5, Space Grotesk typography, glassmorphism CSS custom properties, and real-time interactive ApexCharts dashboards.</li>
+                    <li class="mb-2"><strong>Application Controller:</strong> Managed by Python Flask server executing cryptographic password hashing with bcrypt and CSRF request validation.</li>
+                    <li class="mb-2"><strong>Persistence Layer:</strong> SQLite backend mapping normalized users, scan histories, and quiz certificate tracking using SQLAlchemy ORM.</li>
+                    <li class="mb-2"><strong>AI Classification Engine:</strong> Scikit-Learn's Random Forest classifier training 100 decision trees to execute binary threat predictions.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-lg-6" data-aos="fade-left">
+            <div class="glass-card p-4 border-cs h-100">
+                <h4 class="fw-bold mb-3"><i class="bi bi-shield-check text-primary-cs"></i> Machine Learning Parameters</h4>
+                <p class="text-secondary-cs small">When a URL is submitted, the custom feature extractor isolates key variables to build the classifier vector:</p>
+                <div class="table-responsive small">
+                    <table class="table table-sm text-secondary-cs" style="font-size: 0.8rem;">
+                        <thead>
+                            <tr class="table-light">
+                                <th>Variable Checked</th>
+                                <th>Threat Trigger Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-monospace fw-bold">url_length</td>
+                                <td>Flagged if overall length >= 54 characters.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-monospace fw-bold">having_ip_address</td>
+                                <td>IPv4/IPv6 address used as hostname instead of domain.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-monospace fw-bold">shortening_service</td>
+                                <td>Obfuscated using bit.ly, tinyurl, cutt.ly, etc.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-monospace fw-bold">prefix_suffix</td>
+                                <td>Hyphen character (-) in domain host (e.g. secure-paypal.com).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-monospace fw-bold">having_sub_domain</td>
+                                <td>Domain has >= 3 dot-separated parts.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-monospace fw-bold">ssl_final_state</td>
+                                <td>Scheme is unsecure HTTP instead of secure HTTPS.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Interactive UML Diagrams -->
+    <div class="row" data-aos="fade-up">
+        <div class="col">
+            <div class="glass-card p-4 border-cs mb-5">
+                <h3 class="fw-bold mb-4 text-center"><i class="bi bi-diagram-3-fill text-primary-cs"></i> Unified Modeling Language (UML)</h3>
+                
+                <ul class="nav nav-tabs justify-content-center mb-4" id="diagramTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="usecase-tab" data-bs-toggle="tab" data-bs-target="#usecase" type="button" role="tab" aria-controls="usecase" aria-selected="true">Use Case Diagram</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="dfd0-tab" data-bs-toggle="tab" data-bs-target="#dfd0" type="button" role="tab" aria-controls="dfd0" aria-selected="false">DFD Level 0 & 1</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="er-tab" data-bs-toggle="tab" data-bs-target="#er" type="button" role="tab" aria-controls="er" aria-selected="false">ER Diagram</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="arch-tab" data-bs-toggle="tab" data-bs-target="#arch" type="button" role="tab" aria-controls="arch" aria-selected="false">System Architecture</button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="diagramTabsContent">
+                    <!-- Use Case -->
+                    <div class="tab-pane fade show active" id="usecase" role="tabpanel" aria-labelledby="usecase-tab">
+                        <div class="bg-cs-tertiary border-cs p-4 rounded-3 text-center">
+                            <div class="mermaid">
+                            graph TD
+                                User([Standard User])
+                                Admin([System Admin])
+                                
+                                subgraph CyberShield AI System
+                                    UC1(Scan suspicious URL)
+                                    UC2(Register & Login)
+                                    UC3(View Scan History Dashboard)
+                                    UC4(Take Security Quiz)
+                                    UC5(Generate Completion Certificate)
+                                    UC6(Manage Users Accounts)
+                                    UC7(Export Reports & Auditing Logs)
+                                end
+                                
+                                User --> UC1
+                                User --> UC2
+                                User --> UC3
+                                User --> UC4
+                                User --> UC5
+                                
+                                Admin --> UC2
+                                Admin --> UC6
+                                Admin --> UC7
+                                Admin --> UC1
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- DFD -->
+                    <div class="tab-pane fade" id="dfd0" role="tabpanel" aria-labelledby="dfd0-tab">
+                        <div class="bg-cs-tertiary border-cs p-4 rounded-3">
+                            <h5 class="fw-bold mb-3 text-center text-primary-cs">Data Flow Diagram (DFD Level 1)</h5>
+                            <div class="mermaid">
+                            graph LR
+                                U[User/Admin] -->|Input Credentials| P1[1.0 Authentication Process]
+                                P1 -->|Read/Write User| D1[(Users Table)]
+                                
+                                U -->|Submit URL| P2[2.0 URL Scanner Engine]
+                                P2 -->|Features Extraction| P2
+                                P2 -->|Run Random Forest Model| P2
+                                P2 -->|Save Scan Details| D2[(Scan History Table)]
+                                
+                                U -->|Choose Quiz Answers| P3[3.0 Quiz Controller]
+                                P3 -->|Score Calculation| P3
+                                P3 -->|Record Quiz Results| D3[(Quiz Results Table)]
+                                P3 -->|Trigger Certificate| P4[4.0 Certificate / PDF Engine]
+                                
+                                A[System Admin] -->|Trigger Delete/Export| P5[5.0 Admin Control Panel]
+                                P5 -->|Read/Write User Data| D1
+                                P5 -->|Fetch Scan Logs| D2
+                                P5 -->|Write Admin Activity| D4[(Admin Logs Table)]
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ER -->
+                    <div class="tab-pane fade" id="er" role="tabpanel" aria-labelledby="er-tab">
+                        <div class="bg-cs-tertiary border-cs p-4 rounded-3 text-center">
+                            <div class="mermaid">
+                            erDiagram
+                                USERS {
+                                    int id PK
+                                    string username
+                                    string email
+                                    string password_hash
+                                    string role
+                                    timestamp created_at
+                                }
+                                SCAN_HISTORY {
+                                    int id PK
+                                    int user_id FK
+                                    string url
+                                    string prediction
+                                    double confidence_score
+                                    int risk_score
+                                    string features
+                                    timestamp created_at
+                                }
+                                QUIZ_RESULTS {
+                                    int id PK
+                                    int user_id FK
+                                    int score
+                                    int total_questions
+                                    timestamp completed_at
+                                    string certificate_code
+                                }
+                                ADMIN_LOGS {
+                                    int id PK
+                                    int admin_id FK
+                                    string action
+                                    int target_user_id
+                                    string ip_address
+                                    timestamp created_at
+                                }
+                                
+                                USERS ||--o{ SCAN_HISTORY : "performs"
+                                USERS ||--o{ QUIZ_RESULTS : "completes"
+                                USERS ||--o{ ADMIN_LOGS : "writes"
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Architecture -->
+                    <div class="tab-pane fade" id="arch" role="tabpanel" aria-labelledby="arch-tab">
+                        <div class="bg-cs-tertiary border-cs p-4 rounded-3 text-center">
+                            <div class="mermaid">
+                            flowchart TD
+                                Client[Browser: HTML5 / Space Grotesk / JS]
+                                
+                                subgraph Flask Application Controller
+                                    Routes[Routing & API Controllers]
+                                    Auth[Session Auth Manager]
+                                    PDF[ReportLab PDF Generator]
+                                    Heuristics[Heuristic Feature Extractor]
+                                    RF[scikit-learn Random Forest Model]
+                                end
+                                
+                                subgraph Data Persistence Layer
+                                    DB[(SQLite Database File)]
+                                end
+                                
+                                Client <-->|HTTP Requests / JSON API| Routes
+                                Client <-->|ApexCharts Framework| Client
+                                Client <-->|Mermaid UML rendering| Client
+                                Routes <--> Auth
+                                Routes --> Heuristics
+                                Heuristics --> RF
+                                Routes --> PDF
+                                Routes <-->|SQLAlchemy ORM| DB
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include Mermaid.js Module -->
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    mermaid.initialize({ 
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'default',
+        securityLevel: 'loose',
+        themeVariables: {
+            background: isDark ? '#080f22' : '#ffffff',
+            primaryColor: isDark ? '#0d1530' : '#f0f4ff',
+            lineColor: isDark ? '#4a5a80' : '#d0d9f0'
+        }
+    });
+    
+    // Add theme change listener to reload mermaid with matching theme
+    const themeBtn = document.getElementById("theme-toggle");
+    if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
+            // Reload page on theme change to re-render diagrams with correct colors
+            setTimeout(() => {
+                location.reload();
+            }, 100);
+        });
+    }
+</script>
+{% endblock %}
